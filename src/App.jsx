@@ -303,12 +303,12 @@ const RosterModal = ({ type, members, onClose }) => {
 };
 
 const KINGS_ACHIEVEMENTS = [
-  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_final.png', fmvp: 'Bâng (Jungle)' },
   { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_final.png' },
   { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_final.png', fmvp: 'Khoa (Support)' },
   { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_final.png', fmvp: 'Kuga (DSL)' },
   { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_final.png', fmvp: 'Fish (Mid Lane)' },
   { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy_final.png', fmvp: 'Fish (Mid Lane)' },
+  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_final.png', fmvp: 'Bâng (Jungle)' },
   { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy_final.png', fmvp: 'Red (ADL)' },
   { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy_final.png', fmvp: 'Bâng (Jungle)' },
   { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy_final.png', fmvp: 'Yiwei (DSL)' },
