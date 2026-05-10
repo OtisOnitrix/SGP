@@ -774,53 +774,40 @@ export default function App() {
                         </div>
                         <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
                       </button>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ 
+                        opacity: 0.8, 
+                        y: [0, -10, 0],
+                      }}
+                      transition={{ 
+                        opacity: { delay: 1.5, duration: 1 },
+                        y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                      }}
+                      className="mt-16 flex items-center justify-center gap-20 md:gap-32 w-full"
+                    >
+                      <div className="flex flex-col items-center group">
+                        <div className="flex items-center gap-3">
+                          <span className="text-6xl md:text-8xl font-heading gold-gradient tracking-tighter drop-shadow-2xl">01</span>
+                          <Star size={20} className="text-gold/30 mb-6 group-hover:text-gold transition-colors duration-500" />
+                        </div>
+                        <span className="text-[11px] md:text-sm tracking-[0.6em] uppercase text-white/30 font-bold -mt-2 group-hover:text-white/50 transition-colors">SGP Ladies</span>
+                      </div>
+
+                      <div className="h-16 w-px bg-gold/10 hidden md:block" />
+
+                      <div className="flex flex-col items-center group">
+                        <div className="flex items-center gap-3">
+                          <span className="text-6xl md:text-8xl font-heading gold-gradient tracking-tighter drop-shadow-2xl">11</span>
+                          <Crown size={24} className="text-gold/30 mb-6 group-hover:text-gold transition-colors duration-500" />
+                        </div>
+                        <span className="text-[11px] md:text-sm tracking-[0.6em] uppercase text-white/30 font-bold -mt-2 group-hover:text-white/50 transition-colors">Saigon Phantom</span>
+                      </div>
                     </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-
-            {/* Achievement Row */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.5, duration: 1 }}
-              className="relative z-20 w-full max-w-6xl flex items-center justify-center gap-4 md:gap-8 mt-6 py-6 border-t border-gold/10"
-            >
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-2 mb-2">
-                  <img src="/logo_ladies.jpg" className="w-4 h-4 rounded-full border border-gold/10" />
-                  <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">SGP Ladies</span>
-                </div>
-                <AchievementClean count="01" label="QOGS26 CHAMP" delay={1.6} icon={Star} />
-              </div>
-
-              <div className="h-16 w-px bg-gold/15" />
-
-              <div className="flex flex-col items-center">
-                <div className="flex items-center gap-2 mb-2">
-                  <img src="/logo_king.jpg" className="w-4 h-4 rounded-full border border-gold/10" />
-                  <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">Saigon Phantom</span>
-                </div>
-                <div className="flex gap-4 md:gap-12">
-                  <AchievementClean count="10" label="AOG CHAMP" delay={1.8} icon={Crown} />
-                  <AchievementClean count="01" label="APL23 CHAMP" delay={2.0} icon={Trophy} />
-                </div>
-              </div>
-
-              <div className="h-16 w-px bg-gold/15" />
-
-              <div className="flex flex-col items-center">
-                <span className="text-gold/40 text-[9px] uppercase tracking-widest mb-2 font-bold">Current Era</span>
-                <div className="px-10 flex flex-col items-center">
-                  <div className="flex items-center gap-3 text-gold font-bold text-2xl md:text-3xl tracking-[0.2em] animate-pulse h-[60px] md:h-[80px]">
-                    <Zap size={24} />
-                    <span>AOGS26</span>
-                  </div>
-                  <span className="text-[10px] tracking-[0.3em] uppercase text-white/30 font-bold mt-1">CHAMPION</span>
-                </div>
-              </div>
-            </motion.div>
 
           </motion.div>
         )}
