@@ -291,6 +291,8 @@ const AchievementsModal = ({ onClose }) => (
         />
       ))}
     </div>
+);
+
 const AchievementsModal = ({ onClose }) => (
   <motion.div 
     initial={{ opacity: 0, scale: 1.1 }}
