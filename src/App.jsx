@@ -24,84 +24,25 @@ const ROSTER_DATA = {
   ]
 };
 
-const CursorThread = () => {
-  const canvasRef = useRef(null);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const pointsRef = useRef([]);
-  const NUM_POINTS = 20;
+const Spotlight = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      setMousePos({ x: e.clientX, y: e.clientY });
     };
     window.addEventListener('mousemove', handleMouseMove);
-
-    // Initialize points
-    pointsRef.current = Array.from({ length: NUM_POINTS }, () => ({ x: window.innerWidth/2, y: window.innerHeight/2 }));
-
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    let animationFrame;
-
-    const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resize);
-    resize();
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update points with a "natural" delay/spring effect
-      let prev = mouseRef.current;
-      pointsRef.current.forEach((p, i) => {
-        p.x += (prev.x - p.x) * 0.15;
-        p.y += (prev.y - p.y) * 0.15;
-        prev = p;
-      });
-
-      // Draw the "Gold Thread"
-      ctx.beginPath();
-      ctx.moveTo(pointsRef.current[0].x, pointsRef.current[0].y);
-      for (let i = 1; i < pointsRef.current.length - 1; i++) {
-        const xc = (pointsRef.current[i].x + pointsRef.current[i + 1].x) / 2;
-        const yc = (pointsRef.current[i].y + pointsRef.current[i + 1].y) / 2;
-        ctx.quadraticCurveTo(pointsRef.current[i].x, pointsRef.current[i].y, xc, yc);
-      }
-      
-      const gradient = ctx.createLinearGradient(
-        pointsRef.current[0].x, pointsRef.current[0].y, 
-        pointsRef.current[NUM_POINTS-1].x, pointsRef.current[NUM_POINTS-1].y
-      );
-      gradient.addColorStop(0, 'rgba(212, 175, 55, 0.8)');
-      gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
-      
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 1.5;
-      ctx.lineCap = 'round';
-      ctx.stroke();
-
-      // Mouse Head Light
-      const head = mouseRef.current;
-      const glow = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 150);
-      glow.addColorStop(0, 'rgba(212, 175, 55, 0.15)');
-      glow.addColorStop(1, 'rgba(212, 175, 55, 0)');
-      ctx.fillStyle = glow;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      animationFrame = requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', resize);
-      cancelAnimationFrame(animationFrame);
-    };
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-[999]" />;
+  return (
+    <div
+      className="pointer-events-none fixed inset-0 z-[1000] transition-opacity duration-700"
+      style={{
+        background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.12), transparent 80%)`
+      }}
+    />
+  );
 };
 
 const GodRays = () => (
@@ -289,11 +230,11 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
     transition={{ delay, duration: 1, type: "spring", bounce: 0.4 }}
     className="group flex flex-col items-center"
   >
-    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-64 md:h-64' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center rounded-full overflow-hidden border border-gold/20 bg-black shadow-[0_0_50px_rgba(0,0,0,1)]`}>
+    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-64 md:h-64' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center rounded-full border border-gold/30 bg-black shadow-[0_0_50px_rgba(0,0,0,1)] overflow-hidden`}>
       <div className="absolute inset-0 bg-gold/5 blur-[40px] rounded-full group-hover:bg-gold/15 transition-all duration-700" />
       <img 
         src={item.img} 
-        className="w-[85%] h-[85%] object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:scale-110 transition-transform duration-700" 
+        className="w-[90%] h-[90%] object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-transform duration-700" 
         alt={item.label}
       />
     </div>
@@ -350,69 +291,57 @@ const AchievementsModal = ({ onClose }) => (
         />
       ))}
     </div>
-
-    <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-all p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-xl group">
-      <X size={32} className="group-hover:rotate-90 transition-transform duration-500" />
+const AchievementsModal = ({ onClose }) => (
+  <motion.div 
+    initial={{ opacity: 0, scale: 1.1 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 1.05 }}
+    className="fixed inset-0 z-[600] bg-black/98 backdrop-blur-3xl overflow-y-auto"
+  >
+    <DeveloperBadge />
+    <button 
+      onClick={onClose}
+      className="fixed top-10 right-10 z-[70] text-gold/50 hover:text-gold transition-colors p-3 hover:bg-gold/10 rounded-full border border-gold/20"
+    >
+      <X size={32} />
     </button>
 
     <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-8 relative z-10 overflow-hidden">
-      {/* DevTee Logo in Modal */}
-      <div className="absolute bottom-10 left-10 opacity-20 hover:opacity-50 transition-opacity">
-        <img src="/devtee_logo.png" className="w-24 object-contain filter grayscale invert" />
-      </div>
-
       {/* SGP Ladies Section */}
       <div className="w-full xl:w-[35%] flex flex-col items-center justify-center h-full border-b xl:border-b-0 xl:border-r border-white/5 pb-10 xl:pb-0 xl:pr-16">
         <motion.div 
-          initial={{ opacity: 0, x: -50 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="flex items-center gap-6 mb-12"
         >
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <motion.img 
-              animate={{ rotate: [0, 5, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-              src="/logo_ladies.jpg" 
-              className="w-20 h-20 rounded-full border-2 border-gold/40 shadow-gold-lg" 
-            />
-            <h2 className="text-gold font-heading text-6xl md:text-7xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP Ladies</h2>
-          </div>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/40 to-transparent mb-4" />
-          <p className="text-white/30 text-xs tracking-[0.8em] uppercase font-bold">Divine Queens Hall</p>
+          <img src="/logo_ladies.jpg" className="w-20 h-20 rounded-full border-2 border-gold/30 shadow-[0_0_30px_rgba(212,175,55,0.2)]" />
+          <h2 className="text-6xl md:text-8xl font-heading gold-gradient tracking-[0.2em] uppercase">SGP Ladies</h2>
         </motion.div>
-        
-        <div className="flex justify-center w-full">
-          {LADIES_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`ladies-${i}`} item={item} delay={0.4} size="large" />
-          ))}
+        <div className="flex flex-col items-center">
+          <TrophyItem item={LADIES_ACHIEVEMENTS[0]} delay={0.5} />
+          <span className="mt-6 text-[10px] tracking-[0.5em] text-white/20 uppercase font-bold">Divine Queens Hall</span>
         </div>
       </div>
 
       {/* SGP King Section */}
-      <div className="w-full xl:w-[65%] flex flex-col items-center justify-center h-full xl:pl-16">
+      <div className="w-full xl:w-[65%] h-full flex flex-col items-center justify-center xl:pl-16">
         <motion.div 
-          initial={{ opacity: 0, x: 50 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          className="text-center mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="flex items-center gap-6 mb-12"
         >
-          <div className="flex items-center justify-center gap-6 mb-6">
-            <motion.img 
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              src="/logo_king.jpg" 
-              className="w-20 h-20 rounded-full border-2 border-gold/40 shadow-gold-lg" 
-            />
-            <h2 className="text-gold font-heading text-6xl md:text-7xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP King</h2>
-          </div>
-          <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/40 to-transparent mb-4" />
-          <p className="text-white/30 text-xs tracking-[0.8em] uppercase font-bold">Grand Monarch Dynasty</p>
+          <img src="/logo_king.jpg" className="w-20 h-20 rounded-full border-2 border-gold/30 shadow-[0_0_30px_rgba(212,175,55,0.2)]" />
+          <h2 className="text-6xl md:text-8xl font-heading gold-gradient tracking-[0.2em] uppercase">SGP King</h2>
         </motion.div>
         
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-6 gap-y-12 w-full max-w-7xl">
-          {KINGS_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`king-${i}`} item={item} delay={0.6 + i * 0.08} size="small" />
+        <div className="grid grid-cols-2 gap-x-12 gap-y-16 max-h-[70vh] overflow-y-auto px-12 py-8 scrollbar-hide">
+          {KINGS_ACHIEVEMENTS.map((item, idx) => (
+            <TrophyItem key={idx} item={item} delay={0.6 + idx * 0.1} size="small" />
           ))}
         </div>
+        <span className="mt-8 text-[10px] tracking-[0.5em] text-white/20 uppercase font-bold">Grand Monarch Dynasty</span>
       </div>
     </div>
   </motion.div>
@@ -461,7 +390,7 @@ export default function App() {
   return (
     <main className="relative w-full h-screen overflow-hidden bg-[#000000] text-white font-inter">
       <audio ref={audioRef} src="/music.mp3" loop />
-      <CursorThread />
+      <Spotlight />
       <GodRays />
       <DeveloperBadge />
 
@@ -576,6 +505,9 @@ export default function App() {
               </h1>
             </motion.div>
 
+            <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center overflow-hidden">
+              <div className="absolute -inset-10 bg-gold/5 blur-[120px] rounded-full animate-pulse-slow" />
+
               <AnimatePresence mode="wait">
                 {heroStep === 0 ? (
                   <motion.div
@@ -588,7 +520,7 @@ export default function App() {
                   >
                     <div className="relative max-w-[85%] max-h-full aspect-video rounded-[3rem] overflow-hidden border border-gold/15 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
                       <img
-                        src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/690865252_1523561699439806_8066791754776144081_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeFULRv7ehF2JdrpArUxXYgYXaiYQEDVDkZdqJhAQNUORnr37-um838Z6uqRSRhnG8mATTbeLjLzjlB_8D43qmnF&_nc_ohc=CIRUhdliGK4Q7kNvwG5zdOF&_nc_oc=Adr25wpYHS0cfFZu_gbw9TPgH-GIXBA1rTGbmXIKagQDakIIAG9LJMnbh6kFkb9UDMQ&_nc_zt=23&_nc_ht=scontent.fsgn5-2.fna&_nc_gid=OHWFサロンXZOmrkUhzUhNhQw&_nc_ss=7b2a8&oh=00_Af4Tvdq9Fv1_02hS_3txzoibCE1S0q8bkUVD001PQedyKw&oe=6A062AD6"
+                        src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/690865252_1523561699439806_8066791754776144081_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeFULRv7ehF2JdrpArUxXYgYXaiYQEDVDkZdqJhAQNUORnr37-um838Z6uqRSRhnG8mATTbeLjLzjlB_8D43qmnF&_nc_ohc=CIRUhdliGK4Q7kNvwG5zdOF&_nc_oc=Adr25wpYHS0cfFZu_gbw9TPgH-GIXBA1rTGbmXIKagQDakIIAG9LJMnbh6kFkb9UDMQ&_nc_zt=23&_nc_ht=scontent.fsgn5-2.fna&_nc_gid=OHWFzlZXZOmrkUhzUhNhQw&_nc_ss=7b2a8&oh=00_Af4Tvdq9Fv1_02hS_3txzoibCE1S0q8bkUVD001PQedyKw&oe=6A062AD6"
                         className="w-full h-full object-cover"
                       />
                     </div>
