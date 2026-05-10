@@ -247,10 +247,9 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
       } mb-3 rounded-full bg-[#0a0a0a] shadow-[0_0_30px_rgba(0,0,0,1),inset_0_0_15px_rgba(0,0,0,0.8)] flex items-center justify-center`}
       style={{ overflow: 'hidden' }}
     >
-      <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(circle at center, rgba(212,175,55,0.06) 0%, transparent 70%)' }} />
       <img 
         src={item.img} 
-        className="relative z-10 object-contain filter drop-shadow-[0_0_12px_rgba(212,175,55,0.25)]" 
+        className="relative z-10 object-contain filter drop-shadow-[0_0_10px_rgba(212,175,55,0.2)]" 
         style={{ width: '82%', height: '82%' }}
         alt={item.label}
       />
@@ -307,13 +306,15 @@ const AchievementsModal = ({ onClose }) => (
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="flex items-center gap-4 mb-10"
+          className="flex flex-col items-center mb-10"
         >
-          <img src="/logo_ladies.jpg" className="w-14 h-14 rounded-full border-2 border-gold/30" />
-          <h2 className="text-5xl md:text-6xl font-heading gold-gradient tracking-[0.2em] uppercase">SGP Ladies</h2>
+          <div className="flex items-center gap-4 mb-2">
+            <img src="/logo_ladies.jpg" className="w-14 h-14 rounded-full border-2 border-gold/30" />
+            <h2 className="text-5xl md:text-6xl font-heading gold-gradient tracking-[0.2em] uppercase">SGP Ladies</h2>
+          </div>
+          <span className="text-[9px] tracking-[0.5em] text-white/20 uppercase font-bold">Divine Queens Hall</span>
         </motion.div>
         <TrophyItem item={LADIES_ACHIEVEMENTS[0]} delay={0.4} size="large" />
-        <span className="mt-6 text-[9px] tracking-[0.5em] text-white/20 uppercase font-bold">Divine Queens Hall</span>
       </div>
 
       {/* SGP King Section — right 70% */}
@@ -322,10 +323,13 @@ const AchievementsModal = ({ onClose }) => (
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="flex items-center gap-4 mb-8"
+          className="flex flex-col items-center mb-8"
         >
-          <img src="/logo_king.jpg" className="w-14 h-14 rounded-full border-2 border-gold/30" />
-          <h2 className="text-5xl md:text-6xl font-heading gold-gradient tracking-[0.2em] uppercase">SGP King</h2>
+          <div className="flex items-center gap-4 mb-2">
+            <img src="/logo_king.jpg" className="w-14 h-14 rounded-full border-2 border-gold/30" />
+            <h2 className="text-5xl md:text-6xl font-heading gold-gradient tracking-[0.2em] uppercase">SGP King</h2>
+          </div>
+          <span className="text-[9px] tracking-[0.5em] text-white/20 uppercase font-bold">Grand Monarch Dynasty</span>
         </motion.div>
         
         <div className="grid grid-cols-3 md:grid-cols-4 gap-6 w-full px-4">
@@ -333,7 +337,6 @@ const AchievementsModal = ({ onClose }) => (
             <TrophyItem key={idx} item={item} delay={0.4 + idx * 0.06} size="small" />
           ))}
         </div>
-        <span className="mt-6 text-[9px] tracking-[0.5em] text-white/20 uppercase font-bold">Grand Monarch Dynasty</span>
       </div>
     </div>
   </motion.div>
