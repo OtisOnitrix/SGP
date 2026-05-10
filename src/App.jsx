@@ -223,26 +223,30 @@ const LADIES_ACHIEVEMENTS = [
   { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown_nobg.png' },
 ];
 
-const TrophyItem = ({ item, delay, size = "large" }) => (
+const TrophyItem = ({ item, delay, size = "standard" }) => (
   <motion.div 
     initial={{ opacity: 0, scale: 0.5, y: 30 }}
     animate={{ opacity: 1, scale: 1, y: 0 }}
     transition={{ delay, duration: 0.8, type: "spring", stiffness: 100 }}
     className="group flex flex-col items-center"
   >
-    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-80 md:h-80' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center`}>
-      <div className="absolute inset-0 bg-gold/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+    <div className="relative w-28 h-28 md:w-44 md:h-44 mb-4 flex items-center justify-center">
+      <div className="absolute inset-0 bg-gold/10 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
       <img 
         src={item.img} 
-        className="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-700 ease-out" 
+        className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(212,175,55,0.5)] group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-700 ease-out" 
+        style={{
+          maskImage: 'radial-gradient(circle at center, black 45%, transparent 72%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 45%, transparent 72%)'
+        }}
         alt={item.label}
       />
     </div>
     <div className="text-center">
-      <span className={`block text-gold font-heading ${size === 'large' ? 'text-4xl' : 'text-xl'} tracking-widest leading-none mb-2 drop-shadow-gold`}>
+      <span className="block text-gold font-heading text-xl md:text-2xl tracking-widest leading-none mb-2 drop-shadow-gold">
         {item.label}
       </span>
-      <span className={`${size === 'large' ? 'text-[12px]' : 'text-[8px]'} tracking-[0.3em] text-white/50 uppercase font-bold`}>
+      <span className="block text-[8px] md:text-[10px] tracking-[0.3em] text-white/50 uppercase font-bold">
         {item.year}
       </span>
     </div>
@@ -254,50 +258,50 @@ const AchievementsModal = ({ onClose }) => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 z-[700] flex items-center justify-center bg-black/95 backdrop-blur-2xl"
+    className="fixed inset-0 z-[700] flex items-center justify-center bg-[#050505]"
   >
-    <div className="absolute inset-0 opacity-20 pointer-events-none">
-      <div className="absolute top-0 left-0 w-1/2 h-full bg-gold/10 blur-[150px] -translate-x-1/2" />
-      <div className="absolute bottom-0 right-0 w-1/2 h-full bg-gold/10 blur-[150px] translate-x-1/2" />
+    {/* Split Background Style */}
+    <div className="absolute inset-0 flex overflow-hidden">
+      <div className="w-1/2 h-full bg-gradient-to-br from-gold/10 via-transparent to-transparent opacity-40" />
+      <div className="w-px h-full bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
+      <div className="w-1/2 h-full bg-gradient-to-bl from-transparent via-transparent to-gold/5 opacity-40" />
     </div>
 
     <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md">
       <X size={32} />
     </button>
 
-    <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-12 overflow-hidden">
-      {/* SGP Ladies Section - 40% Width */}
-      <div className="w-full xl:w-[40%] flex flex-col items-center justify-center h-full border-b xl:border-b-0 xl:border-r border-white/10 pb-12 xl:pb-0 xl:pr-12 relative">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="text-center mb-16">
+    <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-12 relative z-10">
+      {/* SGP Ladies Section - 1/3 Width */}
+      <div className="w-full xl:w-1/3 flex flex-col items-center justify-center h-full relative">
+        <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-16">
           <div className="flex items-center justify-center gap-6 mb-4">
-            <img src="/logo_ladies.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
-            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP Ladies</h2>
+            <img src="/logo_ladies.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-gold-sm" />
+            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase drop-shadow-gold">SGP Ladies</h2>
           </div>
-          <div className="h-px w-64 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto mb-4" />
-          <p className="text-white/30 text-[10px] tracking-[0.8em] uppercase font-bold">Queen of Glory Territory</p>
+          <p className="text-white/20 text-[10px] tracking-[0.8em] uppercase font-bold">Queen of Glory Trophies</p>
         </motion.div>
         
         <div className="flex justify-center w-full">
           {LADIES_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`ladies-${i}`} item={item} delay={0.4} size="large" />
+            <TrophyItem key={`ladies-${i}`} item={item} delay={0.4} />
           ))}
         </div>
       </div>
 
-      {/* SGP King Section - 60% Width */}
-      <div className="w-full xl:w-[60%] flex flex-col items-center justify-center h-full relative">
-        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="text-center mb-12">
+      {/* SGP King Section - 2/3 Width */}
+      <div className="w-full xl:w-2/3 flex flex-col items-center justify-center h-full relative">
+        <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-12">
           <div className="flex items-center justify-center gap-6 mb-4">
-            <img src="/logo_king.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
-            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP King</h2>
+            <img src="/logo_king.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-gold-sm" />
+            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase drop-shadow-gold">SGP King</h2>
           </div>
-          <div className="h-px w-64 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto mb-4" />
-          <p className="text-white/30 text-[10px] tracking-[0.8em] uppercase font-bold">12 Major Championships Won</p>
+          <p className="text-white/20 text-[10px] tracking-[0.8em] uppercase font-bold">12 Major Championships</p>
         </motion.div>
         
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-6 gap-y-10 w-full max-w-5xl">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-12 w-full max-w-6xl">
           {KINGS_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`king-${i}`} item={item} delay={0.5 + i * 0.05} size="small" />
+            <TrophyItem key={`king-${i}`} item={item} delay={0.5 + i * 0.05} />
           ))}
         </div>
       </div>
