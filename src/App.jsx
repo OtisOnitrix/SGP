@@ -26,7 +26,7 @@ const ROSTER_DATA = {
 
 const Spotlight = () => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  
+
   useEffect(() => {
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY });
@@ -36,7 +36,7 @@ const Spotlight = () => {
   }, []);
 
   return (
-    <div 
+    <div
       className="pointer-events-none fixed inset-0 z-[200] transition-opacity duration-700"
       style={{
         background: `radial-gradient(800px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.08), transparent 80%)`
@@ -80,7 +80,7 @@ const AchievementClean = ({ count, label, delay, icon: Icon }) => (
 );
 
 const DeveloperBadge = () => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ delay: 2.5 }}
@@ -96,9 +96,9 @@ const DeveloperBadge = () => (
     </div>
     <div className="h-10 w-px bg-white/20 group-hover:bg-gold/30 transition-colors mx-1" />
     <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/20 group-hover:border-gold transition-all duration-500 bg-white/5 p-1 flex items-center justify-center">
-      <img 
-        src="/devtee_logo.png" 
-        className="w-full h-full object-contain rounded-full opacity-90 group-hover:opacity-100 transition-all duration-500 brightness-110" 
+      <img
+        src="/devtee_logo.png"
+        className="w-full h-full object-contain rounded-full opacity-90 group-hover:opacity-100 transition-all duration-500 brightness-110"
         alt="DevTee.Labs Logo"
       />
     </div>
@@ -114,13 +114,13 @@ const RosterModal = ({ type, members, onClose }) => {
   if (!type) return null;
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[500] flex items-center justify-center bg-black/95 backdrop-blur-3xl overflow-y-auto pt-10 pb-20"
     >
-      <button 
+      <button
         onClick={onClose}
         className="fixed top-8 right-8 z-[60] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md"
       >
@@ -128,7 +128,7 @@ const RosterModal = ({ type, members, onClose }) => {
       </button>
 
       <div className="relative w-full max-w-[98vw] xl:max-w-[92vw] flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-12 mt-10 px-2">
-        
+
         {/* Left: Epic Team Photo (Uncropped) */}
         <motion.div
           initial={{ opacity: 0, x: -40, scale: 0.95 }}
@@ -138,8 +138,8 @@ const RosterModal = ({ type, members, onClose }) => {
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           <div className="relative rounded-[2rem] overflow-hidden border border-gold/30 bg-black shadow-[0_0_60px_rgba(0,0,0,0.6)] p-1.5 max-h-[82vh] flex items-center justify-center">
-            <img 
-              src={TEAM_PHOTOS[type]} 
+            <img
+              src={TEAM_PHOTOS[type]}
               className="max-w-full max-h-full w-auto h-auto scale-100 group-hover:scale-[1.02] transition-transform duration-[3s] ease-out image-crisp block rounded-[1.6rem] object-contain"
               alt={`${type} Group`}
             />
@@ -149,9 +149,9 @@ const RosterModal = ({ type, members, onClose }) => {
 
         {/* Right: Members Section */}
         <div className="w-full xl:w-7/12 flex flex-col items-center pl-0 xl:pl-4">
-          
+
           {/* Section Title - Centered over members */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
@@ -174,16 +174,16 @@ const RosterModal = ({ type, members, onClose }) => {
                 className="group relative flex flex-col items-center w-[45%] sm:w-[30%] md:w-[22%] xl:w-[22%] max-w-[200px]"
               >
                 <div className="relative w-full aspect-[3/4.8] rounded-3xl overflow-hidden border-2 border-gold/10 group-hover:border-gold transition-all duration-500 shadow-[0_0_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_100px_rgba(212,175,55,0.3)] bg-black/40">
-                  <img 
-                    src={member.img} 
-                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 brightness-[1.05] contrast-[1.15] saturate-[1.1] image-crisp" 
+                  <img
+                    src={member.img}
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 brightness-[1.05] contrast-[1.15] saturate-[1.1] image-crisp"
                     alt={member.name}
                   />
                   <div className="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
                   <div className="absolute inset-0 opacity-[0.15] pointer-events-none mix-blend-screen bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 group-hover:opacity-40 transition-opacity duration-500" />
                   <div className="absolute inset-0 border-[0px] group-hover:border-[12px] border-gold/20 transition-all duration-500 pointer-events-none blur-[1px]" />
-                  
+
                   <div className="absolute bottom-4 left-0 w-full text-center px-2">
                     <motion.p className="text-gold font-heading text-2xl md:text-3xl tracking-widest drop-shadow-gold">
                       {member.name}
@@ -205,50 +205,60 @@ const RosterModal = ({ type, members, onClose }) => {
 };
 
 const KINGS_ACHIEVEMENTS = [
-  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_nobg.png' },
-  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy_nobg.png' },
-  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy_nobg.png' },
+  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_nobg.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_nobg.png', fmvp: 'SGP King' },
+  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_nobg.png', fmvp: 'Khoa (Support)' },
+  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_nobg.png', fmvp: 'Kuga (DSL)' },
+  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_nobg.png', fmvp: 'Fish (Mid Lane)' },
+  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy_nobg.png', fmvp: 'Fish (Mid Lane)' },
+  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy_nobg.png', fmvp: 'Red (ADL)' },
+  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy_nobg.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy_nobg.png', fmvp: 'Yiwei (DSL)' },
+  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy_nobg.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy_nobg.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy_nobg.png', fmvp: 'SGP King' },
 ];
 
 const LADIES_ACHIEVEMENTS = [
-  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown_nobg.png' },
+  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown_nobg.png', fmvp: 'Shizuka (Mid Lane)' },
 ];
 
-const TrophyItem = ({ item, delay, size = "standard" }) => (
+const TrophyItem = ({ item, delay, size = "large" }) => (
   <motion.div 
-    initial={{ opacity: 0, scale: 0.5, y: 30 }}
-    animate={{ opacity: 1, scale: 1, y: 0 }}
-    transition={{ delay, duration: 0.8, type: "spring", stiffness: 100 }}
+    initial={{ opacity: 0, scale: 0, rotateY: 90 }}
+    animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+    transition={{ delay, duration: 1, type: "spring", bounce: 0.4 }}
     className="group flex flex-col items-center"
   >
-    <div className="relative w-28 h-28 md:w-44 md:h-44 mb-4 flex items-center justify-center">
-      <div className="absolute inset-0 bg-gold/10 blur-[50px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-64 md:h-64' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center rounded-full overflow-hidden border border-gold/10 bg-black/40`}>
+      <div className="absolute inset-0 bg-gold/5 blur-[40px] rounded-full group-hover:bg-gold/20 transition-all duration-700" />
       <img 
         src={item.img} 
-        className="w-full h-full object-contain filter drop-shadow-[0_0_20px_rgba(212,175,55,0.5)] group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-700 ease-out" 
+        className="w-[85%] h-[85%] object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] group-hover:scale-110 transition-transform duration-700" 
         style={{
-          maskImage: 'radial-gradient(circle at center, black 45%, transparent 72%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 45%, transparent 72%)'
+          maskImage: 'radial-gradient(circle at center, black 60%, transparent 95%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, black 60%, transparent 95%)'
         }}
         alt={item.label}
       />
     </div>
     <div className="text-center">
-      <span className="block text-gold font-heading text-xl md:text-2xl tracking-widest leading-none mb-2 drop-shadow-gold">
+      <span className={`block text-gold font-heading ${size === 'large' ? 'text-3xl' : 'text-xl'} tracking-widest leading-none mb-1 drop-shadow-gold`}>
         {item.label}
       </span>
-      <span className="block text-[8px] md:text-[10px] tracking-[0.3em] text-white/50 uppercase font-bold">
+      <span className="block text-[8px] md:text-[10px] tracking-[0.2em] text-white/40 uppercase font-bold mb-2">
         {item.year}
       </span>
+      <motion.div 
+        initial={{ opacity: 0, y: 5 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: delay + 0.5 }}
+        className="px-3 py-1 bg-gold/10 rounded-full border border-gold/20 backdrop-blur-sm"
+      >
+        <p className="text-[7px] md:text-[9px] text-gold/80 font-bold uppercase tracking-widest whitespace-nowrap">
+          FMVP: {item.fmvp}
+        </p>
+      </motion.div>
     </div>
   </motion.div>
 );
@@ -258,50 +268,87 @@ const AchievementsModal = ({ onClose }) => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 z-[700] flex items-center justify-center bg-[#050505]"
+    className="fixed inset-0 z-[700] flex items-center justify-center bg-[#030303] backdrop-blur-2xl"
   >
-    {/* Split Background Style */}
-    <div className="absolute inset-0 flex overflow-hidden">
-      <div className="w-1/2 h-full bg-gradient-to-br from-gold/10 via-transparent to-transparent opacity-40" />
-      <div className="w-px h-full bg-gradient-to-b from-transparent via-gold/30 to-transparent" />
-      <div className="w-1/2 h-full bg-gradient-to-bl from-transparent via-transparent to-gold/5 opacity-40" />
+    {/* Dynamic Background */}
+    <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.05),transparent_70%)]" />
+      <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-gold/20 to-transparent" />
+      
+      {[...Array(6)].map((_, i) => (
+        <motion.div
+          key={i}
+          animate={{ 
+            y: [-100, 100],
+            opacity: [0, 0.5, 0],
+            scale: [1, 1.5, 1]
+          }}
+          transition={{
+            duration: 10 + i * 2,
+            repeat: Infinity,
+            delay: i * 3
+          }}
+          className="absolute w-1 h-40 bg-gold/10 blur-xl"
+          style={{ left: `${15 + i * 15}%`, top: '-10%' }}
+        />
+      ))}
     </div>
 
-    <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md">
-      <X size={32} />
+    <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-all p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-xl group">
+      <X size={32} className="group-hover:rotate-90 transition-transform duration-500" />
     </button>
 
-    <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-12 relative z-10">
-      {/* SGP Ladies Section - 1/3 Width */}
-      <div className="w-full xl:w-1/3 flex flex-col items-center justify-center h-full relative">
-        <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-16">
-          <div className="flex items-center justify-center gap-6 mb-4">
-            <img src="/logo_ladies.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-gold-sm" />
-            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase drop-shadow-gold">SGP Ladies</h2>
+    <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-8 relative z-10 overflow-hidden">
+      {/* SGP Ladies Section */}
+      <div className="w-full xl:w-[35%] flex flex-col items-center justify-center h-full border-b xl:border-b-0 xl:border-r border-white/5 pb-10 xl:pb-0 xl:pr-16">
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }} 
+          animate={{ opacity: 1, x: 0 }} 
+          className="text-center mb-16"
+        >
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <motion.img 
+              animate={{ rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              src="/logo_ladies.jpg" 
+              className="w-20 h-20 rounded-full border-2 border-gold/40 shadow-gold-lg" 
+            />
+            <h2 className="text-gold font-heading text-6xl md:text-7xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP Ladies</h2>
           </div>
-          <p className="text-white/20 text-[10px] tracking-[0.8em] uppercase font-bold">Queen of Glory Trophies</p>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/40 to-transparent mb-4" />
+          <p className="text-white/30 text-xs tracking-[0.8em] uppercase font-bold">Divine Queens Hall</p>
         </motion.div>
         
         <div className="flex justify-center w-full">
           {LADIES_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`ladies-${i}`} item={item} delay={0.4} />
+            <TrophyItem key={`ladies-${i}`} item={item} delay={0.4} size="large" />
           ))}
         </div>
       </div>
 
-      {/* SGP King Section - 2/3 Width */}
-      <div className="w-full xl:w-2/3 flex flex-col items-center justify-center h-full relative">
-        <motion.div initial={{ opacity: 0, y: -30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-center mb-12">
-          <div className="flex items-center justify-center gap-6 mb-4">
-            <img src="/logo_king.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-gold-sm" />
-            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase drop-shadow-gold">SGP King</h2>
+      {/* SGP King Section */}
+      <div className="w-full xl:w-[65%] flex flex-col items-center justify-center h-full xl:pl-16">
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }} 
+          animate={{ opacity: 1, x: 0 }} 
+          className="text-center mb-12"
+        >
+          <div className="flex items-center justify-center gap-6 mb-6">
+            <motion.img 
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 3, repeat: Infinity }}
+              src="/logo_king.jpg" 
+              className="w-20 h-20 rounded-full border-2 border-gold/40 shadow-gold-lg" 
+            />
+            <h2 className="text-gold font-heading text-6xl md:text-7xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP King</h2>
           </div>
-          <p className="text-white/20 text-[10px] tracking-[0.8em] uppercase font-bold">12 Major Championships</p>
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/40 to-transparent mb-4" />
+          <p className="text-white/30 text-xs tracking-[0.8em] uppercase font-bold">Grand Monarch Dynasty</p>
         </motion.div>
         
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-8 gap-y-12 w-full max-w-6xl">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-6 gap-y-12 w-full max-w-7xl">
           {KINGS_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`king-${i}`} item={item} delay={0.5 + i * 0.05} />
+            <TrophyItem key={`king-${i}`} item={item} delay={0.6 + i * 0.08} size="small" />
           ))}
         </div>
       </div>
@@ -310,10 +357,10 @@ const AchievementsModal = ({ onClose }) => (
 );
 
 export default function App() {
-  const [phase, setPhase] = useState('landing'); 
-  const [heroStep, setHeroStep] = useState(0); 
+  const [phase, setPhase] = useState('landing');
+  const [heroStep, setHeroStep] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
-  const [activeRoster, setActiveRoster] = useState(null); 
+  const [activeRoster, setActiveRoster] = useState(null);
   const [showAchievements, setShowAchievements] = useState(false);
   const audioRef = useRef(null);
 
@@ -355,7 +402,7 @@ export default function App() {
       <Spotlight />
       <GodRays />
       <DeveloperBadge />
-      
+
       <AnimatePresence>
         {showAchievements && (
           <AchievementsModal onClose={() => setShowAchievements(false)} />
@@ -364,17 +411,17 @@ export default function App() {
 
       <AnimatePresence>
         {activeRoster && (
-          <RosterModal 
-            type={activeRoster} 
-            members={ROSTER_DATA[activeRoster]} 
-            onClose={() => setActiveRoster(null)} 
+          <RosterModal
+            type={activeRoster}
+            members={ROSTER_DATA[activeRoster]}
+            onClose={() => setActiveRoster(null)}
           />
         )}
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
         {phase === 'landing' && (
-          <motion.div 
+          <motion.div
             key="landing"
             className="absolute inset-0 z-[100] flex flex-col items-center justify-center bg-black"
             exit={{ opacity: 0, scale: 1.1 }}
@@ -395,7 +442,7 @@ export default function App() {
         )}
 
         {phase === 'intro' && (
-          <motion.div 
+          <motion.div
             key="intro"
             className="relative w-full h-screen flex flex-col items-center justify-center bg-black z-50 p-0"
             exit={{ opacity: 0, filter: "brightness(2) blur(40px)" }}
@@ -412,16 +459,16 @@ export default function App() {
               className="relative w-full h-full flex items-center justify-center"
             >
               <div className="absolute -inset-20 bg-gold/20 blur-[120px]" />
-              <img 
-                src="/logo_king.jpg" 
-                className="max-w-[80vw] max-h-[70vh] object-contain rounded-full border border-gold/20 shadow-[0_0_100px_rgba(212,175,55,0.3)]" 
+              <img
+                src="/logo_king.jpg"
+                className="max-w-[80vw] max-h-[70vh] object-contain rounded-full border border-gold/20 shadow-[0_0_100px_rgba(212,175,55,0.3)]"
               />
             </motion.div>
           </motion.div>
         )}
 
         {phase === 'main' && (
-          <motion.div 
+          <motion.div
             key="main"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -440,15 +487,15 @@ export default function App() {
                 <span className="text-gold/40 tracking-[0.5em] text-[9px] uppercase font-bold">Divine Era</span>
               </div>
               <div className="flex gap-6">
-                <button 
-                  onClick={() => setIsMuted(!isMuted)} 
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
                   className="flex items-center gap-2 text-white/30 hover:text-gold transition-colors text-[9px] uppercase tracking-widest font-bold"
                 >
                   {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
                   <span>{isMuted ? 'Unmute' : 'Mute'}</span>
                 </button>
-                <button 
-                  onClick={resetExperience} 
+                <button
+                  onClick={resetExperience}
                   className="flex items-center gap-2 text-white/30 hover:text-gold transition-colors text-[9px] uppercase tracking-widest font-bold"
                 >
                   <RotateCcw size={14} />
@@ -457,7 +504,7 @@ export default function App() {
               </div>
             </div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center mb-4"
@@ -469,7 +516,7 @@ export default function App() {
 
             <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center overflow-hidden">
               <div className="absolute -inset-10 bg-gold/5 blur-[120px] rounded-full animate-pulse-slow" />
-              
+
               <AnimatePresence mode="wait">
                 {heroStep === 0 ? (
                   <motion.div
@@ -480,9 +527,9 @@ export default function App() {
                     transition={{ duration: 1.5 }}
                     className="relative w-full h-full flex items-center justify-center"
                   >
-                    <img 
-                      src="/ckqg.jpg" 
-                      className="max-w-[85%] max-h-full object-contain rounded-2xl shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-gold/10" 
+                    <img
+                      src="/ckqg.jpg"
+                      className="max-w-[85%] max-h-full object-contain rounded-2xl shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-gold/10"
                     />
                     <div className="absolute bottom-12 px-10 py-3 border-b border-gold/30">
                       <span className="text-gold font-heading text-4xl tracking-[0.4em] uppercase">Supremacy</span>
@@ -498,36 +545,36 @@ export default function App() {
                   >
                     <div className="relative w-full h-[85%] flex items-center justify-center">
                       <div className="relative max-w-[95%] max-h-full aspect-video md:aspect-[21/9] rounded-[3rem] overflow-hidden border border-gold/15 shadow-[0_0_150px_rgba(0,0,0,0.9)] bg-black/20">
-                        <motion.img 
+                        <motion.img
                           animate={{ scale: [1, 1.02, 1] }}
                           transition={{ duration: 30, repeat: Infinity }}
-                          src="/user_team.jpg" 
+                          src="/user_team.jpg"
                           className="w-full h-full object-contain"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </div>
-                    
-                    <motion.div 
+
+                    <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 0.6 }}
                       transition={{ delay: 1 }}
                       className="mt-6 flex items-center gap-12"
                     >
-                      <button 
+                      <button
                         onClick={() => setActiveRoster('LADIES')}
                         className="group flex flex-col items-center gap-2"
                       >
-                         <div className="flex items-center gap-3">
-                           <img src="/logo_ladies.jpg" className="w-8 h-8 rounded-full border border-gold/20" />
-                           <h2 className="text-2xl md:text-3xl font-heading tracking-[0.5em] text-white/50 group-hover:text-gold transition-colors uppercase">
+                        <div className="flex items-center gap-3">
+                          <img src="/logo_ladies.jpg" className="w-8 h-8 rounded-full border border-gold/20" />
+                          <h2 className="text-2xl md:text-3xl font-heading tracking-[0.5em] text-white/50 group-hover:text-gold transition-colors uppercase">
                             Meet Ladies
                           </h2>
-                         </div>
+                        </div>
                         <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
                       </button>
 
-                      <motion.button 
+                      <motion.button
                         onClick={() => setShowAchievements(true)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
@@ -539,16 +586,16 @@ export default function App() {
                         <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
                       </motion.button>
 
-                      <button 
+                      <button
                         onClick={() => setActiveRoster('KINGS')}
                         className="group flex flex-col items-center gap-2"
                       >
-                         <div className="flex items-center gap-3">
-                           <h2 className="text-2xl md:text-3xl font-heading tracking-[0.5em] text-white/50 group-hover:text-gold transition-colors uppercase">
+                        <div className="flex items-center gap-3">
+                          <h2 className="text-2xl md:text-3xl font-heading tracking-[0.5em] text-white/50 group-hover:text-gold transition-colors uppercase">
                             Meet Kings
                           </h2>
-                           <img src="/logo_king.jpg" className="w-8 h-8 rounded-full border border-gold/20" />
-                         </div>
+                          <img src="/logo_king.jpg" className="w-8 h-8 rounded-full border border-gold/20" />
+                        </div>
                         <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
                       </button>
                     </motion.div>
@@ -558,7 +605,7 @@ export default function App() {
             </div>
 
             {/* Achievement Row */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 1 }}
@@ -576,8 +623,8 @@ export default function App() {
 
               <div className="flex flex-col items-center">
                 <div className="flex items-center gap-2 mb-2">
-                   <img src="/logo_king.jpg" className="w-4 h-4 rounded-full border border-gold/10" />
-                   <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">SGP King</span>
+                  <img src="/logo_king.jpg" className="w-4 h-4 rounded-full border border-gold/10" />
+                  <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">SGP King</span>
                 </div>
                 <div className="flex gap-4 md:gap-12">
                   <AchievementClean count="11" label="AOG CHAMP" delay={1.8} icon={Crown} />
