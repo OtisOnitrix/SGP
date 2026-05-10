@@ -84,7 +84,7 @@ const DeveloperBadge = () => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ delay: 2.5 }}
-    className="fixed bottom-8 right-8 z-[100] flex items-center gap-4 group bg-black/40 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 hover:border-gold/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+    className="fixed bottom-8 right-8 z-[600] flex items-center gap-4 group bg-black/40 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 hover:border-gold/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
   >
     <div className="flex flex-col items-end">
       <span className="text-[9px] tracking-[0.4em] uppercase text-white/40 group-hover:text-gold/70 transition-colors font-bold leading-none mb-1">
@@ -247,6 +247,7 @@ export default function App() {
       <audio ref={audioRef} src="/music.mp3" loop />
       <Spotlight />
       <GodRays />
+      <DeveloperBadge />
       
       <AnimatePresence>
         {activeRoster && (
@@ -313,7 +314,6 @@ export default function App() {
             animate={{ opacity: 1 }}
             className="relative w-full h-screen flex flex-col items-center p-6 md:p-10"
           >
-            <DeveloperBadge />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none opacity-[0.015]">
               <h1 className="text-[25vw] font-heading leading-none">PHANTOM</h1>
             </div>
