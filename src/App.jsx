@@ -505,21 +505,52 @@ export default function App() {
               <AnimatePresence mode="wait">
                 {heroStep === 0 ? (
                   <motion.div
-                    key="ckqg"
-                    initial={{ opacity: 0, scale: 1.02 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98, filter: "blur(20px)" }}
-                    transition={{ duration: 1.5 }}
-                    className="relative w-full h-full flex items-center justify-center"
+                    key="sgp-title-intro"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 1, 0] }}
+                    transition={{ duration: 4.8, times: [0, 0.2, 0.75, 1], ease: "easeInOut" }}
+                    className="relative w-full h-full flex flex-col items-center justify-center select-none pointer-events-none"
                   >
-                    <div className="relative max-w-[85%] max-h-full aspect-video rounded-[3rem] overflow-hidden border border-gold/15 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
-                      <img
-                        src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/690865252_1523561699439806_8066791754776144081_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeFULRv7ehF2JdrpArUxXYgYXaiYQEDVDkZdqJhAQNUORnr37-um838Z6uqRSRhnG8mATTbeLjLzjlB_8D43qmnF&_nc_ohc=CIRUhdliGK4Q7kNvwG5zdOF&_nc_oc=Adr25wpYHS0cfFZu_gbw9TPgH-GIXBA1rTGbmXIKagQDakIIAG9LJMnbh6kFkb9UDMQ&_nc_zt=23&_nc_ht=scontent.fsgn5-2.fna&_nc_gid=OHWFzlZXZOmrkUhzUhNhQw&_nc_ss=7b2a8&oh=00_Af4Tvdq9Fv1_02hS_3txzoibCE1S0q8bkUVD001PQedyKw&oe=6A062AD6"
-                        className="w-full h-full object-cover"
+                    {/* Thin horizontal lines — cinematic letterbox */}
+                    <div className="absolute top-0 left-0 w-full h-[10%] bg-black z-10" />
+                    <div className="absolute bottom-0 left-0 w-full h-[10%] bg-black z-10" />
+
+                    {/* Main title block */}
+                    <div className="flex flex-col items-center gap-2">
+                      <motion.div
+                        initial={{ opacity: 0, x: -80, letterSpacing: '0.1em' }}
+                        animate={{ opacity: [0, 1, 1, 0], x: [-80, 0, 0, 0] }}
+                        transition={{ duration: 4.8, times: [0, 0.2, 0.75, 1] }}
+                        className="text-white/10 font-heading text-[12vw] md:text-[10vw] leading-none uppercase tracking-[0.15em]"
+                      >
+                        SAIGON
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, x: 80 }}
+                        animate={{ opacity: [0, 1, 1, 0], x: [80, 0, 0, 0] }}
+                        transition={{ duration: 4.8, times: [0, 0.25, 0.75, 1], delay: 0.15 }}
+                        className="text-white/10 font-heading text-[12vw] md:text-[10vw] leading-none uppercase tracking-[0.15em]"
+                      >
+                        PHANTOM
+                      </motion.div>
+
+                      {/* thin gold separator line that draws in */}
+                      <motion.div
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: [0, 1, 1, 0] }}
+                        transition={{ duration: 4.8, times: [0.15, 0.35, 0.75, 1] }}
+                        className="w-48 h-px bg-gold/40 origin-left mt-4"
                       />
-                    </div>
-                    <div className="absolute bottom-12 px-10 py-3 border-b border-gold/30 backdrop-blur-md">
-                      <span className="text-gold font-heading text-4xl tracking-[0.4em] uppercase">Supremacy</span>
+
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 0.5, 0.5, 0] }}
+                        transition={{ duration: 4.8, times: [0.3, 0.45, 0.75, 1] }}
+                        className="text-white/30 text-xs tracking-[0.6em] uppercase font-bold mt-3"
+                      >
+                        Champions Never Rest
+                      </motion.span>
                     </div>
                   </motion.div>
                 ) : (
