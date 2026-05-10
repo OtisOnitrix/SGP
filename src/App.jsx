@@ -205,48 +205,44 @@ const RosterModal = ({ type, members, onClose }) => {
 };
 
 const KINGS_ACHIEVEMENTS = [
-  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup.jpeg' },
-  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy.jpeg' },
-  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy.jpeg' },
+  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_nobg.png' },
+  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy_nobg.png' },
+  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy_nobg.png' },
 ];
 
 const LADIES_ACHIEVEMENTS = [
-  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown.jpeg' },
+  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown_nobg.png' },
 ];
 
 const TrophyItem = ({ item, delay, size = "large" }) => (
   <motion.div 
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ delay, duration: 0.6 }}
+    initial={{ opacity: 0, scale: 0.5, y: 30 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    transition={{ delay, duration: 0.8, type: "spring", stiffness: 100 }}
     className="group flex flex-col items-center"
   >
-    <div className={`relative ${size === 'large' ? 'w-32 h-44 md:w-48 md:h-64' : 'w-20 h-28 md:w-24 md:h-32'} mb-2 flex items-center justify-center`}>
-      <div className="absolute inset-0 bg-gold/10 blur-[30px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-80 md:h-80' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center`}>
+      <div className="absolute inset-0 bg-gold/20 blur-[60px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
       <img 
         src={item.img} 
-        className="w-full h-full object-contain filter drop-shadow-[0_0_10px_rgba(212,175,55,0.4)] group-hover:scale-110 transition-transform duration-500" 
-        style={{
-          maskImage: 'radial-gradient(circle at center, black 40%, transparent 70%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 40%, transparent 70%)'
-        }}
+        className="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:-translate-y-4 transition-all duration-700 ease-out" 
         alt={item.label}
       />
     </div>
     <div className="text-center">
-      <span className={`block text-gold font-heading ${size === 'large' ? 'text-2xl' : 'text-sm'} tracking-widest leading-none mb-1`}>
+      <span className={`block text-gold font-heading ${size === 'large' ? 'text-4xl' : 'text-xl'} tracking-widest leading-none mb-2 drop-shadow-gold`}>
         {item.label}
       </span>
-      <span className="block text-[7px] tracking-[0.1em] text-white/40 uppercase font-bold">
+      <span className={`${size === 'large' ? 'text-[12px]' : 'text-[8px]'} tracking-[0.3em] text-white/50 uppercase font-bold`}>
         {item.year}
       </span>
     </div>
@@ -258,43 +254,50 @@ const AchievementsModal = ({ onClose }) => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 z-[700] flex items-center justify-center bg-black/98 backdrop-blur-3xl p-6 md:p-12"
+    className="fixed inset-0 z-[700] flex items-center justify-center bg-black/95 backdrop-blur-2xl"
   >
+    <div className="absolute inset-0 opacity-20 pointer-events-none">
+      <div className="absolute top-0 left-0 w-1/2 h-full bg-gold/10 blur-[150px] -translate-x-1/2" />
+      <div className="absolute bottom-0 right-0 w-1/2 h-full bg-gold/10 blur-[150px] translate-x-1/2" />
+    </div>
+
     <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md">
       <X size={32} />
     </button>
 
-    <div className="w-full max-w-[95vw] h-full flex flex-col xl:flex-row items-center gap-8 xl:gap-20">
-      {/* Left: SGP Ladies (Compact Focus) */}
-      <div className="w-full xl:w-1/3 flex flex-col items-center justify-center border-b xl:border-b-0 xl:border-r border-white/10 pb-8 xl:pb-0 xl:pr-20">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="text-center mb-10">
-          <div className="flex items-center justify-center gap-4 mb-2">
-            <img src="/logo_ladies.jpg" className="w-10 h-10 rounded-full border border-gold/30" />
-            <h2 className="text-gold font-heading text-3xl tracking-[0.2em] uppercase whitespace-nowrap">SGP Ladies</h2>
+    <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-12 overflow-hidden">
+      {/* SGP Ladies Section - 40% Width */}
+      <div className="w-full xl:w-[40%] flex flex-col items-center justify-center h-full border-b xl:border-b-0 xl:border-r border-white/10 pb-12 xl:pb-0 xl:pr-12 relative">
+        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="text-center mb-16">
+          <div className="flex items-center justify-center gap-6 mb-4">
+            <img src="/logo_ladies.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
+            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP Ladies</h2>
           </div>
-          <p className="text-white/20 text-[8px] tracking-[0.5em] uppercase font-bold">The Queens Territory</p>
+          <div className="h-px w-64 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto mb-4" />
+          <p className="text-white/30 text-[10px] tracking-[0.8em] uppercase font-bold">Queen of Glory Territory</p>
         </motion.div>
         
-        <div className="flex justify-center">
+        <div className="flex justify-center w-full">
           {LADIES_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`ladies-${i}`} item={item} delay={0.2} size="large" />
+            <TrophyItem key={`ladies-${i}`} item={item} delay={0.4} size="large" />
           ))}
         </div>
       </div>
 
-      {/* Right: SGP King (Grid view) */}
-      <div className="w-full xl:w-2/3 flex flex-col items-center justify-center h-full max-h-[85vh]">
-        <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="text-center mb-8">
-          <div className="flex items-center justify-center gap-4 mb-2">
-            <img src="/logo_king.jpg" className="w-10 h-10 rounded-full border border-gold/30" />
-            <h2 className="text-gold font-heading text-3xl tracking-[0.2em] uppercase whitespace-nowrap">SGP King</h2>
+      {/* SGP King Section - 60% Width */}
+      <div className="w-full xl:w-[60%] flex flex-col items-center justify-center h-full relative">
+        <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="text-center mb-12">
+          <div className="flex items-center justify-center gap-6 mb-4">
+            <img src="/logo_king.jpg" className="w-16 h-16 rounded-full border border-gold/40 shadow-[0_0_20px_rgba(212,175,55,0.3)]" />
+            <h2 className="text-gold font-heading text-5xl md:text-6xl tracking-[0.2em] uppercase whitespace-nowrap drop-shadow-gold">SGP King</h2>
           </div>
-          <p className="text-white/20 text-[8px] tracking-[0.5em] uppercase font-bold">12X Major Championships</p>
+          <div className="h-px w-64 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto mb-4" />
+          <p className="text-white/30 text-[10px] tracking-[0.8em] uppercase font-bold">12 Major Championships Won</p>
         </motion.div>
         
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-8 w-full">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-x-6 gap-y-10 w-full max-w-5xl">
           {KINGS_ACHIEVEMENTS.map((item, i) => (
-            <TrophyItem key={`king-${i}`} item={item} delay={0.3 + i * 0.05} size="small" />
+            <TrophyItem key={`king-${i}`} item={item} delay={0.5 + i * 0.05} size="small" />
           ))}
         </div>
       </div>
