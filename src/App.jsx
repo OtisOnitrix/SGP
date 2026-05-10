@@ -128,6 +128,10 @@ const RosterModal = ({ type, members, onClose }) => {
 
   const [glitching, setGlitching] = useState(false);
   const [shizukaAlt, setShizukaAlt] = useState(false);
+  const [teamGlitching, setTeamGlitching] = useState(false);
+  const [ladiesTeamMain, setLadiesTeamMain] = useState(false);
+
+  const LADIES_TEAM_INTRO = "https://scontent.fsgn5-21.fna.fbcdn.net/v/t39.30808-6/671464887_1507833814345928_8762972936382848204_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGIrX1dCRXACQ7hzuH1p_JE-9xncPrTgJb73Gdw-tOAloHtKBgAtD3LCmQdIWPwokscxAPd_nkdQZqhhw1-2O6L&_nc_ohc=Ta37UINTOEUQ7kNvwHUShTX&_nc_oc=AdpOxRyIQmfmxegvbLW6pM72ieMEOkVP-96R1xYXxQifAVRnq7VgqHk9W6RI68XhJu0&_nc_zt=23&_nc_ht=scontent.fsgn5-21.fna&_nc_gid=5Kx_Cv6TJ2Sm1rJrOxdpqA&_nc_ss=7b2a8&oh=00_Af7aCZk5hSXLkWgSU2b2AMDaIjgp5zvUPacztmQBdoO-Dw&oe=6A066D27";
 
   const handleShizukaClick = () => {
     if (glitching) return;
@@ -137,6 +141,17 @@ const RosterModal = ({ type, members, onClose }) => {
       setGlitching(false);
     }, 600);
   };
+
+  const handleTeamClick = () => {
+    if (type !== 'LADIES' || teamGlitching || ladiesTeamMain) return;
+    setTeamGlitching(true);
+    setTimeout(() => {
+      setLadiesTeamMain(true);
+      setTeamGlitching(false);
+    }, 600);
+  };
+
+  const currentTeamPhoto = (type === 'LADIES' && !ladiesTeamMain) ? LADIES_TEAM_INTRO : TEAM_PHOTOS[type];
 
   return (
     <motion.div
@@ -178,15 +193,28 @@ const RosterModal = ({ type, members, onClose }) => {
           initial={{ opacity: 0, x: -40, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.2, duration: 1.2, ease: "easeOut" }}
-          className="w-full xl:w-5/12 relative group flex flex-col justify-center"
+          className={`w-full xl:w-5/12 relative group flex flex-col justify-center ${type === 'LADIES' && !ladiesTeamMain ? 'cursor-pointer' : ''}`}
+          onClick={handleTeamClick}
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
           <div className="relative rounded-[2rem] overflow-hidden border border-gold/30 bg-black shadow-[0_0_60px_rgba(0,0,0,0.6)] p-1.5 max-h-[82vh] flex items-center justify-center">
             <img
-              src={TEAM_PHOTOS[type]}
+              src={currentTeamPhoto}
               className="max-w-full max-h-full w-auto h-auto scale-100 group-hover:scale-[1.02] transition-transform duration-[3s] ease-out image-crisp block rounded-[1.6rem] object-contain"
               alt={`${type} Group`}
             />
+            {teamGlitching && (
+              <div
+                className="absolute inset-0 glitch-overlay z-20"
+                style={{
+                  backgroundImage: `url(${currentTeamPhoto})`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  filter: 'brightness(1.8) saturate(2)',
+                }}
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
           </div>
         </motion.div>
@@ -419,14 +447,14 @@ export default function App() {
     if (audioRef.current) {
       audioRef.current.play();
     }
-    // SGP logo (6s) → DevTee splash (4s) → main
+    // SGP logo (4s) → DevTee splash (4s) → main
     setTimeout(() => {
       setPhase('devtee');
       setTimeout(() => {
         setPhase('main');
         setTimeout(() => setHeroStep(1), 5000);
       }, 4000);
-    }, 6000);
+    }, 4000);
   };
 
   const resetExperience = () => {
@@ -444,7 +472,7 @@ export default function App() {
         setPhase('main');
         setTimeout(() => setHeroStep(1), 5000);
       }, 4000);
-    }, 6000);
+    }, 4000);
   };
 
   return (
