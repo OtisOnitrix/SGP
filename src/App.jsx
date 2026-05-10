@@ -244,12 +244,12 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
     <div
       className={`relative ${
         size === 'large' ? 'w-44 h-44 md:w-56 md:h-56' : 'w-28 h-28 md:w-32 md:h-32'
-      } mb-3 rounded-full bg-[#0a0a0a] shadow-[0_0_30px_rgba(0,0,0,1),inset_0_0_15px_rgba(0,0,0,0.8)] flex items-center justify-center`}
+      } mb-3 rounded-full bg-black flex items-center justify-center`}
       style={{ overflow: 'hidden' }}
     >
       <img 
         src={item.img} 
-        className="relative z-10 object-contain filter drop-shadow-[0_0_10px_rgba(212,175,55,0.2)]" 
+        className="relative z-10 object-contain" 
         style={{ width: '82%', height: '82%' }}
         alt={item.label}
       />
@@ -290,7 +290,6 @@ const AchievementsModal = ({ onClose }) => (
     className="fixed inset-0 z-[600] overflow-hidden"
     style={{ background: '#000000' }}
   >
-    <Spotlight />
     <DeveloperBadge />
     <button 
       onClick={onClose}
