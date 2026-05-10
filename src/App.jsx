@@ -84,21 +84,24 @@ const DeveloperBadge = () => (
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ delay: 2.5 }}
-    className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 group bg-black/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/5 hover:border-gold/30 transition-all duration-500"
+    className="fixed bottom-8 right-8 z-[100] flex items-center gap-4 group bg-black/40 backdrop-blur-xl px-6 py-3 rounded-full border border-white/10 hover:border-gold/50 transition-all duration-500 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
   >
     <div className="flex flex-col items-end">
-      <span className="text-[7px] tracking-[0.4em] uppercase text-white/20 group-hover:text-gold/50 transition-colors font-bold leading-none mb-0.5">
+      <span className="text-[9px] tracking-[0.4em] uppercase text-white/40 group-hover:text-gold/70 transition-colors font-bold leading-none mb-1">
         Developed by
       </span>
-      <span className="text-[9px] tracking-[0.2em] uppercase text-white/40 group-hover:text-white transition-colors font-heading">
+      <span className="text-sm tracking-[0.2em] uppercase text-white/70 group-hover:text-white transition-colors font-heading">
         DevTee.Labs
       </span>
     </div>
-    <div className="h-8 w-px bg-white/10 group-hover:bg-gold/20 transition-colors mx-1" />
-    <img 
-      src="/devtee_logo.png" 
-      className="h-7 w-auto opacity-40 group-hover:opacity-100 transition-all duration-500 filter brightness-125 grayscale group-hover:grayscale-0" 
-    />
+    <div className="h-10 w-px bg-white/20 group-hover:bg-gold/30 transition-colors mx-1" />
+    <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white/20 group-hover:border-gold transition-all duration-500 bg-white/5 p-1 flex items-center justify-center">
+      <img 
+        src="/devtee_logo.png" 
+        className="w-full h-full object-contain rounded-full opacity-90 group-hover:opacity-100 transition-all duration-500 brightness-110" 
+        alt="DevTee.Labs Logo"
+      />
+    </div>
   </motion.div>
 );
 
