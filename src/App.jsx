@@ -121,8 +121,22 @@ const TEAM_PHOTOS = {
   LADIES: "https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/689494890_1622265059907757_3007718775422784531_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHoF3zAuF0tWZD0annoNWWJHm5zgkMJcmsebnOCQwlya31hPFeVNMlFR13Zwaii5RWXxUm2KpqCTXsKnqzS9Rjy&_nc_ohc=rsqK9X2a7RYQ7kNvwHrsB-o&_nc_oc=Adpr3-lRoY8r81GIMADDWtFmzgTNmGu65tPbz6tE7XAQDgSXCEAtHPtavT89e49pSBc&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=-GjslrDh-bzHI0Tx156taQ&_nc_ss=7b2a8&oh=00_Af5Ahfapq-sCRu8glCLXvM2Q_UXcIH_hphs5wsyjH5xx0g&oe=6A062B45"
 };
 
+const SHIZUKA_ALT = "https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/689477244_1527649675697675_2872725294770790789_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHl7Mz06B_tbiEX206shfiviyUNx5F548CLJQ3HkXnjwByYnMGdzvv5_YCR1rQoce4L5FF7VtqiCXuRWwSvY5YG&_nc_ohc=9XhpD3jHeGUQ7kNvwGql1Dd&_nc_oc=AdqCqGhZRfWpyo8t-U4LHgl4l4_yHip3S0lJJEPeFnFil2PARVukD8MKnKcO1jTMKrA&_nc_zt=23&_nc_ht=scontent.fsgn5-2.fna&_nc_gid=oQQcq2HsWboPItNQKFJfyQ&_nc_ss=7b2a8&oh=00_Af6VmK4lfUGecGU0wN6Ckvk6WGtfOgffkE2N_BHGCBpsIA&oe=6A06645B";
+
 const RosterModal = ({ type, members, onClose }) => {
   if (!type) return null;
+
+  const [glitching, setGlitching] = useState(false);
+  const [shizukaAlt, setShizukaAlt] = useState(false);
+
+  const handleShizukaClick = () => {
+    if (glitching) return;
+    setGlitching(true);
+    setTimeout(() => {
+      setShizukaAlt(prev => !prev);
+      setGlitching(false);
+    }, 600);
+  };
 
   return (
     <motion.div
@@ -131,6 +145,25 @@ const RosterModal = ({ type, members, onClose }) => {
       exit={{ opacity: 0 }}
       className="fixed inset-0 z-[500] flex items-center justify-center bg-black/95 backdrop-blur-3xl overflow-y-auto pt-10 pb-20"
     >
+      <style>{`
+        @keyframes glitch-clip {
+          0%   { clip-path: inset(0 0 95% 0); transform: translate(-4px, 0); }
+          10%  { clip-path: inset(20% 0 60% 0); transform: translate(4px, -2px); filter: hue-rotate(90deg); }
+          20%  { clip-path: inset(50% 0 30% 0); transform: translate(-6px, 2px); }
+          30%  { clip-path: inset(10% 0 80% 0); transform: translate(3px, -1px); filter: hue-rotate(180deg); }
+          40%  { clip-path: inset(70% 0 10% 0); transform: translate(-3px, 3px); }
+          50%  { clip-path: inset(30% 0 50% 0); transform: translate(5px, 0px); filter: hue-rotate(270deg); }
+          60%  { clip-path: inset(80% 0 5%  0); transform: translate(-4px, -3px); }
+          70%  { clip-path: inset(5%  0 70% 0); transform: translate(2px, 2px); filter: hue-rotate(0deg); }
+          80%  { clip-path: inset(40% 0 40% 0); transform: translate(-5px, 1px); }
+          90%  { clip-path: inset(60% 0 20% 0); transform: translate(4px, -2px); }
+          100% { clip-path: inset(0 0 0 0);    transform: translate(0, 0); }
+        }
+        .glitch-overlay {
+          animation: glitch-clip 0.6s steps(1) forwards;
+        }
+      `}</style>
+
       <button
         onClick={onClose}
         className="fixed top-8 right-8 z-[60] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md"
@@ -140,7 +173,7 @@ const RosterModal = ({ type, members, onClose }) => {
 
       <div className="relative w-full max-w-[98vw] xl:max-w-[92vw] flex flex-col xl:flex-row items-center justify-center gap-8 xl:gap-12 mt-10 px-2">
 
-        {/* Left: Epic Team Photo (Uncropped) */}
+        {/* Left: Epic Team Photo */}
         <motion.div
           initial={{ opacity: 0, x: -40, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
@@ -160,8 +193,6 @@ const RosterModal = ({ type, members, onClose }) => {
 
         {/* Right: Members Section */}
         <div className="w-full xl:w-7/12 flex flex-col items-center pl-0 xl:pl-4">
-
-          {/* Section Title - Centered over members */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -176,38 +207,64 @@ const RosterModal = ({ type, members, onClose }) => {
 
           {/* Members Grid */}
           <div className="w-full flex flex-wrap justify-center gap-4 md:gap-6">
-            {members.map((member, i) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.4 + i * 0.1, duration: 0.8, ease: "easeOut" }}
-                className="group relative flex flex-col items-center w-[45%] sm:w-[30%] md:w-[22%] xl:w-[22%] max-w-[200px]"
-              >
-                <div className="relative w-full aspect-[3/4.8] rounded-3xl overflow-hidden border-2 border-gold/10 group-hover:border-gold transition-all duration-500 shadow-[0_0_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_100px_rgba(212,175,55,0.3)] bg-black/40">
-                  <img
-                    src={member.img}
-                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 brightness-[1.05] contrast-[1.15] saturate-[1.1] image-crisp"
-                    alt={member.name}
-                  />
-                  <div className="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
-                  <div className="absolute inset-0 opacity-[0.15] pointer-events-none mix-blend-screen bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 group-hover:opacity-40 transition-opacity duration-500" />
-                  <div className="absolute inset-0 border-[0px] group-hover:border-[12px] border-gold/20 transition-all duration-500 pointer-events-none blur-[1px]" />
+            {members.map((member, i) => {
+              const isShizuka = type === 'LADIES' && member.name === 'Shizuka';
+              const currentImg = isShizuka && shizukaAlt ? SHIZUKA_ALT : member.img;
 
-                  <div className="absolute bottom-4 left-0 w-full text-center px-2">
-                    <motion.p className="text-gold font-heading text-2xl md:text-3xl tracking-widest drop-shadow-gold">
-                      {member.name}
-                    </motion.p>
-                    <div className="h-0.5 w-8 bg-gold/50 mx-auto my-1 scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                    <p className="text-[9px] text-white/70 uppercase tracking-[0.2em] font-bold">
-                      {member.role}
-                    </p>
+              return (
+                <motion.div
+                  key={member.name}
+                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ delay: 0.4 + i * 0.1, duration: 0.8, ease: "easeOut" }}
+                  className={`group relative flex flex-col items-center w-[45%] sm:w-[30%] md:w-[22%] xl:w-[22%] max-w-[200px] ${isShizuka ? 'cursor-pointer' : ''}`}
+                  onClick={isShizuka ? handleShizukaClick : undefined}
+                >
+                  <div className={`relative w-full aspect-[3/4.8] rounded-3xl overflow-hidden border-2 ${isShizuka ? 'border-gold/40 hover:border-gold' : 'border-gold/10 group-hover:border-gold'} transition-all duration-500 shadow-[0_0_50px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_100px_rgba(212,175,55,0.3)] bg-black/40`}>
+                    {/* Base image */}
+                    <img
+                      src={currentImg}
+                      className="w-full h-full object-cover brightness-[1.05] contrast-[1.15] saturate-[1.1] image-crisp"
+                      alt={member.name}
+                    />
+
+                    {/* Glitch overlay — only for Shizuka when active */}
+                    {isShizuka && glitching && (
+                      <div
+                        className="absolute inset-0 glitch-overlay"
+                        style={{
+                          backgroundImage: `url(${currentImg})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                          filter: 'brightness(1.8) saturate(2)',
+                          mixBlendMode: 'screen',
+                        }}
+                      />
+                    )}
+
+                    {isShizuka && (
+                      <div className="absolute top-2 right-2 bg-gold/80 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <Star size={10} className="text-black" />
+                      </div>
+                    )}
+
+                    <div className="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 group-hover:opacity-40 transition-opacity duration-500" />
+
+                    <div className="absolute bottom-4 left-0 w-full text-center px-2">
+                      <motion.p className="text-gold font-heading text-2xl md:text-3xl tracking-widest drop-shadow-gold">
+                        {member.name}
+                      </motion.p>
+                      <div className="h-0.5 w-8 bg-gold/50 mx-auto my-1 scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                      <p className="text-[9px] text-white/70 uppercase tracking-[0.2em] font-bold">
+                        {member.role}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className="absolute -inset-8 bg-gold/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
-              </motion.div>
-            ))}
+                  <div className="absolute -inset-8 bg-gold/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -360,9 +417,13 @@ export default function App() {
     if (audioRef.current) {
       audioRef.current.play();
     }
+    // SGP logo (6s) → DevTee splash (4s) → main
     setTimeout(() => {
-      setPhase('main');
-      setTimeout(() => setHeroStep(1), 5000);
+      setPhase('devtee');
+      setTimeout(() => {
+        setPhase('main');
+        setTimeout(() => setHeroStep(1), 5000);
+      }, 4000);
     }, 6000);
   };
 
@@ -376,8 +437,11 @@ export default function App() {
       audioRef.current.play();
     }
     setTimeout(() => {
-      setPhase('main');
-      setTimeout(() => setHeroStep(1), 5000);
+      setPhase('devtee');
+      setTimeout(() => {
+        setPhase('main');
+        setTimeout(() => setHeroStep(1), 5000);
+      }, 4000);
     }, 6000);
   };
 
@@ -447,6 +511,56 @@ export default function App() {
               <img
                 src="/logo_king.jpg"
                 className="max-w-[80vw] max-h-[70vh] object-contain rounded-full border border-gold/20 shadow-[0_0_100px_rgba(212,175,55,0.3)]"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+
+        {phase === 'devtee' && (
+          <motion.div
+            key="devtee"
+            className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, filter: 'brightness(2) blur(20px)' }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Subtle bg glow */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.06)_0%,transparent_70%)]" />
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+              className="flex flex-col items-center gap-8 relative z-10"
+            >
+              {/* Logo */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1, ease: 'backOut' }}
+                className="w-40 h-40 rounded-full overflow-hidden border border-gold/20 shadow-[0_0_80px_rgba(212,175,55,0.15)] bg-white/5 p-3 flex items-center justify-center"
+              >
+                <img src="/devtee_logo.png" className="w-full h-full object-contain" alt="DevTee.Labs" />
+              </motion.div>
+
+              {/* Text */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="text-center"
+              >
+                <p className="text-white/25 text-xs tracking-[0.5em] uppercase font-bold mb-3">Sản phẩm được phát triển bởi</p>
+                <h2 className="text-5xl md:text-7xl font-heading gold-gradient tracking-[0.3em] uppercase">DevTee.Labs</h2>
+              </motion.div>
+
+              {/* thin gold line */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 1, duration: 1.2 }}
+                className="w-48 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"
               />
             </motion.div>
           </motion.div>
