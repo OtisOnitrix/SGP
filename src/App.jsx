@@ -39,7 +39,7 @@ const Spotlight = () => {
     <div
       className="pointer-events-none fixed inset-0 z-[1000] transition-opacity duration-700"
       style={{
-        background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.12), transparent 80%)`
+        background: `radial-gradient(600px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.07), transparent 80%)`
       }}
     />
   );
@@ -243,8 +243,8 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
   >
     <div
       className={`relative ${
-        size === 'large' ? 'w-44 h-44 md:w-56 md:h-56' : 'w-20 h-20 md:w-24 md:h-24'
-      } mb-3 rounded-full bg-[#0a0a0a] border border-gold/25 shadow-[0_0_40px_rgba(0,0,0,1),inset_0_0_20px_rgba(0,0,0,0.8)] flex items-center justify-center`}
+        size === 'large' ? 'w-44 h-44 md:w-56 md:h-56' : 'w-28 h-28 md:w-32 md:h-32'
+      } mb-3 rounded-full bg-[#0a0a0a] shadow-[0_0_30px_rgba(0,0,0,1),inset_0_0_15px_rgba(0,0,0,0.8)] flex items-center justify-center`}
       style={{ overflow: 'hidden' }}
     >
       <div className="absolute inset-0 rounded-full" style={{ background: 'radial-gradient(circle at center, rgba(212,175,55,0.06) 0%, transparent 70%)' }} />
