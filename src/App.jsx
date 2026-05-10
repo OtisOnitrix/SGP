@@ -204,88 +204,98 @@ const RosterModal = ({ type, members, onClose }) => {
   );
 };
 
-const ACHIEVEMENTS_DATA = [
-  {
-    title: "Queens of Glory",
-    subtitle: "MÙA XUÂN 2026 CHAMPION",
-    img: "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/684311379_1520812293048080_2345265621423398727_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeH_z74XPjAzzAN9In7_ZAy5htcg9FFzW4mG1yD0UXNbiUzAZcMHkPmutH3gfEp7pcCakr6NwlZMurSSneVFeOKx&_nc_ohc=lEtoahZnWG8Q7kNvwEeP4kN&_nc_oc=AdpTQ8j4_Ia__i_YDUtmY3ZRBciFLSXAj2KYFv0Q90Tkh7jYu7Qy2tW0FbgBHhIzk04&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=-siOIyS8JSVojOHk48BeMQ&_nc_ss=7b2a8&oh=00_Af5mpWlF0QlP53ANgVjc_3UCCu-evZYPfb6zJFWmVwyiCA&oe=6A0627ED",
-    seasons: ["SPRING 2026"],
-    type: "CROWN"
-  },
-  {
-    title: "Arena of Glory",
-    subtitle: "11X VIETNAM CHAMPIONS",
-    img: "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/690779072_1525962645866378_2024343186994333452_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeE2jrDXY-Y0xVm0F9xUai66kMbNx515dG6Qxs3HnXl0bjDwkPKaBqJy8DsSAbyhsV1NF8RippXOJpQIugve6yeo&_nc_ohc=3YHgeWPES9QQ7kNvwGRDm1K&_nc_oc=Ado-hcOqsXFV13aSBtNshYGbJu8X2RJlEBr0-WGs6Tjp-Sp2VUeTah8ax90NqciGWNo&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=lBDBu9xfp90uOwCT7ZI3eA&_nc_ss=7b2a8&oh=00_Af60JrM92HeJOsjMhIcwIrHre0oEayGPw8ObFKltxF4bfQ&oe=6A063BC2",
-    seasons: ["S26", "S25", "W24", "S24", "W23", "S23", "W22", "S22", "W21", "W20", "S18"],
-    type: "SHIELD"
-  },
-  {
-    title: "APL 2023",
-    subtitle: "INTERNATIONAL CHAMPION",
-    img: "https://kenh14cdn.com/203336854389633024/2023/7/23/photo-1-1690120853313712451009.jpg",
-    seasons: ["2023"],
-    type: "CUP"
-  }
+const KINGS_ACHIEVEMENTS = [
+  { type: 'APL', year: 'International 2023', label: 'APL 2023', img: '/apl_cup.jpeg' },
+  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy.jpeg' },
+  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy.jpeg' },
 ];
+
+const LADIES_ACHIEVEMENTS = [
+  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown.jpeg' },
+];
+
+const TrophyItem = ({ item, delay }) => (
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.8, y: 20 }}
+    animate={{ opacity: 1, scale: 1, y: 0 }}
+    transition={{ delay, duration: 0.8, ease: "easeOut" }}
+    className="group flex flex-col items-center p-4"
+  >
+    <div className="relative w-24 h-32 md:w-32 md:h-44 mb-4 flex items-center justify-center">
+      <div className="absolute inset-0 bg-gold/5 blur-[40px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+      <img 
+        src={item.img} 
+        className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] group-hover:scale-110 transition-transform duration-500" 
+        alt={item.label}
+      />
+    </div>
+    <div className="text-center">
+      <span className="block text-gold font-heading text-lg md:text-xl tracking-widest mb-1 group-hover:drop-shadow-gold transition-all">
+        {item.label}
+      </span>
+      <span className="block text-[8px] md:text-[10px] tracking-[0.2em] text-white/40 uppercase font-bold whitespace-nowrap">
+        {item.year}
+      </span>
+    </div>
+  </motion.div>
+);
 
 const AchievementsModal = ({ onClose }) => (
   <motion.div 
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     exit={{ opacity: 0 }}
-    className="fixed inset-0 z-[700] flex items-center justify-center bg-black/98 backdrop-blur-3xl overflow-y-auto pt-20 pb-20 px-6"
+    className="fixed inset-0 z-[700] flex flex-col bg-black/98 backdrop-blur-3xl overflow-y-auto px-6 py-20"
   >
     <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md">
       <X size={32} />
     </button>
 
-    <div className="w-full max-w-7xl flex flex-col items-center">
-      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
-        <h2 className="text-gold font-heading text-6xl md:text-7xl tracking-[0.4em] uppercase mb-4 drop-shadow-[0_0_30px_rgba(212,175,55,0.3)]">Hall of Fame</h2>
-        <div className="h-px w-64 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto" />
-      </motion.div>
+    <div className="w-full max-w-7xl mx-auto flex flex-col gap-24">
+      {/* SGP Ladies Section */}
+      <section className="flex flex-col items-center">
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img src="/logo_ladies.jpg" className="w-12 h-12 rounded-full border border-gold/30 shadow-gold-sm" />
+            <h2 className="text-gold font-heading text-4xl md:text-5xl tracking-[0.3em] uppercase">SGP Ladies</h2>
+          </div>
+          <div className="h-px w-48 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto" />
+          <p className="text-white/30 text-[10px] tracking-[0.5em] uppercase mt-4 font-bold">Queen of Glory Trophies</p>
+        </motion.div>
+        
+        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
+          {LADIES_ACHIEVEMENTS.map((item, i) => (
+            <TrophyItem key={`ladies-${i}`} item={item} delay={0.2 + i * 0.1} />
+          ))}
+        </div>
+      </section>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
-        {ACHIEVEMENTS_DATA.map((item, i) => (
-          <motion.div 
-            key={item.title}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 + i * 0.1 }}
-            className="group relative flex flex-col items-center p-8 rounded-[3rem] bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-gold/30 transition-all duration-700"
-          >
-            <div className="relative w-full aspect-square mb-10 flex items-center justify-center overflow-hidden">
-              {/* Specialized Trophy Clipping/Extraction Style */}
-              <div className="absolute inset-0 bg-gold/5 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-              <img 
-                src={item.img} 
-                className={`w-[120%] h-[120%] object-contain scale-110 group-hover:scale-125 transition-transform duration-1000 brightness-110 contrast-125 saturate-110 ${
-                  item.type === 'CROWN' ? 'object-[center_35%]' : 
-                  item.type === 'SHIELD' ? 'object-[center_center]' : 
-                  'object-[center_30%]'
-                }`}
-                style={{
-                  maskImage: 'radial-gradient(circle at center, black 45%, transparent 75%)',
-                  WebkitMaskImage: 'radial-gradient(circle at center, black 45%, transparent 75%)'
-                }}
-              />
-            </div>
-
-            <div className="text-center">
-              <h3 className="text-gold font-heading text-4xl tracking-widest mb-2 drop-shadow-gold">{item.title}</h3>
-              <p className="text-[10px] tracking-[0.4em] text-white/40 uppercase font-bold mb-6">{item.subtitle}</p>
-              
-              <div className="flex flex-wrap justify-center gap-2 max-w-[280px]">
-                {item.seasons.map(s => (
-                  <span key={s} className="px-3 py-1 rounded-full bg-gold/10 border border-gold/20 text-[9px] text-gold/80 font-bold tracking-wider">
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      {/* SGP King Section */}
+      <section className="flex flex-col items-center">
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img src="/logo_king.jpg" className="w-12 h-12 rounded-full border border-gold/30 shadow-gold-sm" />
+            <h2 className="text-gold font-heading text-4xl md:text-5xl tracking-[0.3em] uppercase">SGP King</h2>
+          </div>
+          <div className="h-px w-48 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto" />
+          <p className="text-white/30 text-[10px] tracking-[0.5em] uppercase mt-4 font-bold">AOG & International Trophies</p>
+        </motion.div>
+        
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-8 justify-items-center">
+          {KINGS_ACHIEVEMENTS.map((item, i) => (
+            <TrophyItem key={`king-${i}`} item={item} delay={0.4 + i * 0.05} />
+          ))}
+        </div>
+      </section>
     </div>
   </motion.div>
 );
@@ -561,7 +571,7 @@ export default function App() {
                    <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">SGP King</span>
                 </div>
                 <div className="flex gap-4 md:gap-12">
-                  <AchievementClean count="10" label="AOG CHAMP" delay={1.8} icon={Crown} />
+                  <AchievementClean count="11" label="AOG CHAMP" delay={1.8} icon={Crown} />
                   <AchievementClean count="01" label="APL23 CHAMP" delay={2.0} icon={Trophy} />
                 </div>
               </div>
