@@ -204,11 +204,98 @@ const RosterModal = ({ type, members, onClose }) => {
   );
 };
 
+const ACHIEVEMENTS_DATA = [
+  {
+    title: "Queens of Glory",
+    subtitle: "MÙA XUÂN 2026 CHAMPION",
+    img: "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/684311379_1520812293048080_2345265621423398727_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeH_z74XPjAzzAN9In7_ZAy5htcg9FFzW4mG1yD0UXNbiUzAZcMHkPmutH3gfEp7pcCakr6NwlZMurSSneVFeOKx&_nc_ohc=lEtoahZnWG8Q7kNvwEeP4kN&_nc_oc=AdpTQ8j4_Ia__i_YDUtmY3ZRBciFLSXAj2KYFv0Q90Tkh7jYu7Qy2tW0FbgBHhIzk04&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=-siOIyS8JSVojOHk48BeMQ&_nc_ss=7b2a8&oh=00_Af5mpWlF0QlP53ANgVjc_3UCCu-evZYPfb6zJFWmVwyiCA&oe=6A0627ED",
+    seasons: ["SPRING 2026"],
+    type: "CROWN"
+  },
+  {
+    title: "Arena of Glory",
+    subtitle: "11X VIETNAM CHAMPIONS",
+    img: "https://scontent.fsgn5-5.fna.fbcdn.net/v/t39.30808-6/690779072_1525962645866378_2024343186994333452_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeE2jrDXY-Y0xVm0F9xUai66kMbNx515dG6Qxs3HnXl0bjDwkPKaBqJy8DsSAbyhsV1NF8RippXOJpQIugve6yeo&_nc_ohc=3YHgeWPES9QQ7kNvwGRDm1K&_nc_oc=Ado-hcOqsXFV13aSBtNshYGbJu8X2RJlEBr0-WGs6Tjp-Sp2VUeTah8ax90NqciGWNo&_nc_zt=23&_nc_ht=scontent.fsgn5-5.fna&_nc_gid=lBDBu9xfp90uOwCT7ZI3eA&_nc_ss=7b2a8&oh=00_Af60JrM92HeJOsjMhIcwIrHre0oEayGPw8ObFKltxF4bfQ&oe=6A063BC2",
+    seasons: ["S26", "S25", "W24", "S24", "W23", "S23", "W22", "S22", "W21", "W20", "S18"],
+    type: "SHIELD"
+  },
+  {
+    title: "APL 2023",
+    subtitle: "INTERNATIONAL CHAMPION",
+    img: "https://kenh14cdn.com/203336854389633024/2023/7/23/photo-1-1690120853313712451009.jpg",
+    seasons: ["2023"],
+    type: "CUP"
+  }
+];
+
+const AchievementsModal = ({ onClose }) => (
+  <motion.div 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    className="fixed inset-0 z-[700] flex items-center justify-center bg-black/98 backdrop-blur-3xl overflow-y-auto pt-20 pb-20 px-6"
+  >
+    <button onClick={onClose} className="fixed top-8 right-8 z-[800] text-gold/50 hover:text-gold transition-colors p-4 hover:bg-gold/10 rounded-full border border-gold/20 backdrop-blur-md">
+      <X size={32} />
+    </button>
+
+    <div className="w-full max-w-7xl flex flex-col items-center">
+      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-16">
+        <h2 className="text-gold font-heading text-6xl md:text-7xl tracking-[0.4em] uppercase mb-4 drop-shadow-[0_0_30px_rgba(212,175,55,0.3)]">Hall of Fame</h2>
+        <div className="h-px w-64 bg-gradient-to-r from-transparent via-gold/50 to-transparent mx-auto" />
+      </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-12 w-full">
+        {ACHIEVEMENTS_DATA.map((item, i) => (
+          <motion.div 
+            key={item.title}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 + i * 0.1 }}
+            className="group relative flex flex-col items-center p-8 rounded-[3rem] bg-gradient-to-b from-white/5 to-transparent border border-white/10 hover:border-gold/30 transition-all duration-700"
+          >
+            <div className="relative w-full aspect-square mb-10 flex items-center justify-center overflow-hidden">
+              {/* Specialized Trophy Clipping/Extraction Style */}
+              <div className="absolute inset-0 bg-gold/5 blur-[80px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+              <img 
+                src={item.img} 
+                className={`w-[120%] h-[120%] object-contain scale-110 group-hover:scale-125 transition-transform duration-1000 brightness-110 contrast-125 saturate-110 ${
+                  item.type === 'CROWN' ? 'object-[center_35%]' : 
+                  item.type === 'SHIELD' ? 'object-[center_center]' : 
+                  'object-[center_30%]'
+                }`}
+                style={{
+                  maskImage: 'radial-gradient(circle at center, black 45%, transparent 75%)',
+                  WebkitMaskImage: 'radial-gradient(circle at center, black 45%, transparent 75%)'
+                }}
+              />
+            </div>
+
+            <div className="text-center">
+              <h3 className="text-gold font-heading text-4xl tracking-widest mb-2 drop-shadow-gold">{item.title}</h3>
+              <p className="text-[10px] tracking-[0.4em] text-white/40 uppercase font-bold mb-6">{item.subtitle}</p>
+              
+              <div className="flex flex-wrap justify-center gap-2 max-w-[280px]">
+                {item.seasons.map(s => (
+                  <span key={s} className="px-3 py-1 rounded-full bg-gold/10 border border-gold/20 text-[9px] text-gold/80 font-bold tracking-wider">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </motion.div>
+);
+
 export default function App() {
   const [phase, setPhase] = useState('landing'); 
   const [heroStep, setHeroStep] = useState(0); 
   const [isMuted, setIsMuted] = useState(false);
   const [activeRoster, setActiveRoster] = useState(null); 
+  const [showAchievements, setShowAchievements] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -232,6 +319,7 @@ export default function App() {
     setPhase('intro');
     setHeroStep(0);
     setActiveRoster(null);
+    setShowAchievements(false);
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play();
@@ -249,6 +337,12 @@ export default function App() {
       <GodRays />
       <DeveloperBadge />
       
+      <AnimatePresence>
+        {showAchievements && (
+          <AchievementsModal onClose={() => setShowAchievements(false)} />
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>
         {activeRoster && (
           <RosterModal 
@@ -414,9 +508,17 @@ export default function App() {
                         <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
                       </button>
 
-                      <h2 className="text-3xl md:text-5xl font-heading tracking-[1em] gold-gradient uppercase text-center ml-[1em]">
-                        SAIGON PHANTOM
-                      </h2>
+                      <motion.button 
+                        onClick={() => setShowAchievements(true)}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="group flex flex-col items-center gap-2"
+                      >
+                        <h2 className="text-3xl md:text-5xl font-heading tracking-[1em] gold-gradient uppercase text-center ml-[1em] group-hover:drop-shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all duration-500">
+                          SAIGON PHANTOM
+                        </h2>
+                        <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
+                      </motion.button>
 
                       <button 
                         onClick={() => setActiveRoster('KINGS')}
