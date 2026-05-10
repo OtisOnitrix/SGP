@@ -251,15 +251,17 @@ const RosterModal = ({ type, members, onClose }) => {
                     <div className="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/pinstripe-dark.png')]" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-90 group-hover:opacity-40 transition-opacity duration-500" />
 
-                    <div className="absolute bottom-4 left-0 w-full text-center px-2">
-                      <motion.p className="text-gold font-heading text-2xl md:text-3xl tracking-widest drop-shadow-gold">
-                        {member.name}
-                      </motion.p>
-                      <div className="h-0.5 w-8 bg-gold/50 mx-auto my-1 scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-                      <p className="text-[9px] text-white/70 uppercase tracking-[0.2em] font-bold">
-                        {member.role}
-                      </p>
-                    </div>
+                    {!(isShizuka && shizukaAlt) && (
+                      <div className="absolute bottom-4 left-0 w-full text-center px-2">
+                        <motion.p className="text-gold font-heading text-2xl md:text-3xl tracking-widest drop-shadow-gold">
+                          {member.name}
+                        </motion.p>
+                        <div className="h-0.5 w-8 bg-gold/50 mx-auto my-1 scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                        <p className="text-[9px] text-white/70 uppercase tracking-[0.2em] font-bold">
+                          {member.role}
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <div className="absolute -inset-8 bg-gold/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10" />
                 </motion.div>
@@ -522,45 +524,46 @@ export default function App() {
             className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0, filter: 'brightness(2) blur(20px)' }}
+            exit={{ opacity: 0, filter: 'brightness(2) blur(40px)' }}
             transition={{ duration: 0.8 }}
           >
-            {/* Subtle bg glow */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(212,175,55,0.06)_0%,transparent_70%)]" />
-
             <motion.div
-              initial={{ opacity: 0, scale: 0.85, y: 30 }}
+              initial={{ opacity: 0, scale: 0.9, y: 40 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-              className="flex flex-col items-center gap-8 relative z-10"
+              transition={{ duration: 1.5, ease: 'easeOut' }}
+              className="flex flex-col items-center gap-12 relative z-10"
             >
-              {/* Logo */}
+              {/* Large, Pure Logo */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.5 }}
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 1, ease: 'backOut' }}
-                className="w-40 h-40 rounded-full overflow-hidden border border-gold/20 shadow-[0_0_80px_rgba(212,175,55,0.15)] bg-white/5 p-3 flex items-center justify-center"
+                transition={{ duration: 1.2 }}
+                className="w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden flex items-center justify-center"
               >
-                <img src="/devtee_logo.png" className="w-full h-full object-contain" alt="DevTee.Labs" />
+                <img src="/devtee_logo.png" className="w-full h-full object-contain rounded-full" alt="DevTee.Labs" />
               </motion.div>
 
-              {/* Text */}
+              {/* Cinematic Gray Text */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 1 }}
-                className="text-center"
+                transition={{ delay: 0.6, duration: 1.2 }}
+                className="text-center space-y-4"
               >
-                <p className="text-white/25 text-xs tracking-[0.5em] uppercase font-bold mb-3">Sản phẩm được phát triển bởi</p>
-                <h2 className="text-5xl md:text-7xl font-heading gold-gradient tracking-[0.3em] uppercase">DevTee.Labs</h2>
+                <p className="text-white/10 text-xs md:text-sm tracking-[0.8em] uppercase font-bold">
+                  Sản phẩm được phát triển bởi
+                </p>
+                <h2 className="text-6xl md:text-9xl font-heading text-white/15 tracking-[0.25em] uppercase leading-none">
+                  DevTee.Labs
+                </h2>
               </motion.div>
 
-              {/* thin gold line */}
+              {/* Subdued separator */}
               <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 1, duration: 1.2 }}
-                className="w-48 h-px bg-gradient-to-r from-transparent via-gold/50 to-transparent"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ scaleX: 1, opacity: 0.2 }}
+                transition={{ delay: 1.2, duration: 1.5 }}
+                className="w-64 h-px bg-white"
               />
             </motion.div>
           </motion.div>
