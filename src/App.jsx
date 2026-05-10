@@ -774,6 +774,8 @@ export default function App() {
                         </div>
                         <div className="h-px w-0 group-hover:w-full bg-gold/50 transition-all duration-500" />
                       </button>
+                    </motion.div>
+
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ 
