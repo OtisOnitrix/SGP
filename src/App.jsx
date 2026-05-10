@@ -79,6 +79,29 @@ const AchievementClean = ({ count, label, delay, icon: Icon }) => (
   </motion.div>
 );
 
+const DeveloperBadge = () => (
+  <motion.div 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 2.5 }}
+    className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 group bg-black/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/5 hover:border-gold/30 transition-all duration-500"
+  >
+    <div className="flex flex-col items-end">
+      <span className="text-[7px] tracking-[0.4em] uppercase text-white/20 group-hover:text-gold/50 transition-colors font-bold leading-none mb-0.5">
+        Developed by
+      </span>
+      <span className="text-[9px] tracking-[0.2em] uppercase text-white/40 group-hover:text-white transition-colors font-heading">
+        DevTee.Labs
+      </span>
+    </div>
+    <div className="h-8 w-px bg-white/10 group-hover:bg-gold/20 transition-colors mx-1" />
+    <img 
+      src="/devtee_logo.png" 
+      className="h-7 w-auto opacity-40 group-hover:opacity-100 transition-all duration-500 filter brightness-125 grayscale group-hover:grayscale-0" 
+    />
+  </motion.div>
+);
+
 const TEAM_PHOTOS = {
   KINGS: "https://scontent.fsgn5-21.fna.fbcdn.net/v/t39.30808-6/634260188_1537589441708653_1029799505354569367_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHPFlrc_waEKLc3Km5WZ62C7INZF9zf8Nbsg1kX3N_w1tG_tUXqRcKvdEUwKULlCyD1gGAT7XVPMjvYv8bbxMsn&_nc_ohc=9vVYilA7-poQ7kNvwEFSC5r&_nc_oc=Adr6CWSQl8X1RLKFHVJ78ObublROql_wkpm_o7EA_0cP3v0oEP7zfoT_hPCbJYtqsoo&_nc_zt=23&_nc_ht=scontent.fsgn5-21.fna&_nc_gid=3uiqf8h2Aydc6v1KCQ2vUQ&_nc_ss=7b2a8&oh=00_Af41O3pYhUSpRblvTJK9_xNtHBhDfuVDRJ1tCMtNb3n7Jw&oe=6A062FDA",
   LADIES: "https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/689494890_1622265059907757_3007718775422784531_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHoF3zAuF0tWZD0annoNWWJHm5zgkMJcmsebnOCQwlya31hPFeVNMlFR13Zwaii5RWXxUm2KpqCTXsKnqzS9Rjy&_nc_ohc=rsqK9X2a7RYQ7kNvwHrsB-o&_nc_oc=Adpr3-lRoY8r81GIMADDWtFmzgTNmGu65tPbz6tE7XAQDgSXCEAtHPtavT89e49pSBc&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=-GjslrDh-bzHI0Tx156taQ&_nc_ss=7b2a8&oh=00_Af5Ahfapq-sCRu8glCLXvM2Q_UXcIH_hphs5wsyjH5xx0g&oe=6A062B45"
@@ -287,6 +310,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             className="relative w-full h-screen flex flex-col items-center p-6 md:p-10"
           >
+            <DeveloperBadge />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none opacity-[0.015]">
               <h1 className="text-[25vw] font-heading leading-none">PHANTOM</h1>
             </div>
