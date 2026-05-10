@@ -105,6 +105,29 @@ const DeveloperBadge = () => (
   </motion.div>
 );
 
+const GodRays = () => (
+  <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+    {[...Array(5)].map((_, i) => (
+      <motion.div
+        key={i}
+        initial={{ opacity: 0, x: -100 }}
+        animate={{ 
+          opacity: [0, 0.1, 0],
+          x: ['-10%', '110%'],
+        }}
+        transition={{
+          duration: 15 + i * 5,
+          repeat: Infinity,
+          delay: i * 4,
+          ease: "linear"
+        }}
+        className="absolute w-[40%] h-[200%] bg-gradient-to-r from-transparent via-gold/5 to-transparent -rotate-[35deg]"
+        style={{ left: `${15 + i * 15}%`, top: '-10%' }}
+      />
+    ))}
+  </div>
+);
+
 const TEAM_PHOTOS = {
   KINGS: "https://scontent.fsgn5-21.fna.fbcdn.net/v/t39.30808-6/634260188_1537589441708653_1029799505354569367_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHPFlrc_waEKLc3Km5WZ62C7INZF9zf8Nbsg1kX3N_w1tG_tUXqRcKvdEUwKULlCyD1gGAT7XVPMjvYv8bbxMsn&_nc_ohc=9vVYilA7-poQ7kNvwEFSC5r&_nc_oc=Adr6CWSQl8X1RLKFHVJ78ObublROql_wkpm_o7EA_0cP3v0oEP7zfoT_hPCbJYtqsoo&_nc_zt=23&_nc_ht=scontent.fsgn5-21.fna&_nc_gid=3uiqf8h2Aydc6v1KCQ2vUQ&_nc_ss=7b2a8&oh=00_Af41O3pYhUSpRblvTJK9_xNtHBhDfuVDRJ1tCMtNb3n7Jw&oe=6A062FDA",
   LADIES: "https://scontent.fsgn5-10.fna.fbcdn.net/v/t39.30808-6/689494890_1622265059907757_3007718775422784531_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHoF3zAuF0tWZD0annoNWWJHm5zgkMJcmsebnOCQwlya31hPFeVNMlFR13Zwaii5RWXxUm2KpqCTXsKnqzS9Rjy&_nc_ohc=rsqK9X2a7RYQ7kNvwHrsB-o&_nc_oc=Adpr3-lRoY8r81GIMADDWtFmzgTNmGu65tPbz6tE7XAQDgSXCEAtHPtavT89e49pSBc&_nc_zt=23&_nc_ht=scontent.fsgn5-10.fna&_nc_gid=-GjslrDh-bzHI0Tx156taQ&_nc_ss=7b2a8&oh=00_Af5Ahfapq-sCRu8glCLXvM2Q_UXcIH_hphs5wsyjH5xx0g&oe=6A062B45"
@@ -261,37 +284,8 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
   </motion.div>
 );
 
-const AchievementsModal = ({ onClose }) => (
-  <motion.div 
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    className="fixed inset-0 z-[700] flex items-center justify-center bg-[#030303] backdrop-blur-2xl"
-  >
-    {/* Dynamic Background */}
-    <div className="absolute inset-0 overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(212,175,55,0.05),transparent_70%)]" />
-      <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-transparent via-gold/20 to-transparent" />
-      
-      {[...Array(6)].map((_, i) => (
-        <motion.div
-          key={i}
-          animate={{ 
-            y: [-100, 100],
-            opacity: [0, 0.5, 0],
-            scale: [1, 1.5, 1]
-          }}
-          transition={{
-            duration: 10 + i * 2,
-            repeat: Infinity,
-            delay: i * 3
-          }}
-          className="absolute w-1 h-40 bg-gold/10 blur-xl"
-          style={{ left: `${15 + i * 15}%`, top: '-10%' }}
-        />
-      ))}
-    </div>
-);
+
+
 
 const AchievementsModal = ({ onClose }) => (
   <motion.div 
