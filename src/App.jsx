@@ -131,8 +131,10 @@ const RosterModal = ({ type, members, onClose }) => {
   const [shizukaAlt, setShizukaAlt] = useState(false);
   const [teamGlitching, setTeamGlitching] = useState(false);
   const [ladiesTeamMain, setLadiesTeamMain] = useState(false);
+  const [kingsTeamAlt, setKingsTeamAlt] = useState(false);
 
   const LADIES_TEAM_INTRO = "https://scontent.fsgn5-21.fna.fbcdn.net/v/t39.30808-6/671464887_1507833814345928_8762972936382848204_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeGIrX1dCRXACQ7hzuH1p_JE-9xncPrTgJb73Gdw-tOAloHtKBgAtD3LCmQdIWPwokscxAPd_nkdQZqhhw1-2O6L&_nc_ohc=Ta37UINTOEUQ7kNvwHUShTX&_nc_oc=AdpOxRyIQmfmxegvbLW6pM72ieMEOkVP-96R1xYXxQifAVRnq7VgqHk9W6RI68XhJu0&_nc_zt=23&_nc_ht=scontent.fsgn5-21.fna&_nc_gid=5Kx_Cv6TJ2Sm1rJrOxdpqA&_nc_ss=7b2a8&oh=00_Af7aCZk5hSXLkWgSU2b2AMDaIjgp5zvUPacztmQBdoO-Dw&oe=6A066D27";
+  const KINGS_TEAM_ALT = "https://scontent.fsgn5-13.fna.fbcdn.net/v/t39.30808-6/691602021_1622567926544137_3589974385270157465_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeFNWagdMFpsEQQH0oJ-n5a2LyRlTue6KmgvJGVO57oqaPENOx5aMxlyIthtZ0emAT1EWI5Ene8PLv3maJUdmNsr&_nc_ohc=6DSpXZxAsPUQ7kNvwGayynQ&_nc_oc=Adonylmu-1rCVlAWvbL__69Hd6SfU36cpXVkZCZrHAEOkq9yZSC3u1LEKtj2TAOMbWc&_nc_zt=23&_nc_ht=scontent.fsgn5-13.fna&_nc_gid=wtLRQ2b00eUilrljFJ6ZPA&_nc_ss=7b2a8&oh=00_Af6HvNKgMwVMxCGEtSx3eH0EYJTYwBarwIwHT45XmQPW7g&oe=6A0652A1";
 
   const handleShizukaClick = () => {
     if (glitching) return;
@@ -144,15 +146,25 @@ const RosterModal = ({ type, members, onClose }) => {
   };
 
   const handleTeamClick = () => {
-    if (type !== 'LADIES' || teamGlitching || ladiesTeamMain) return;
-    setTeamGlitching(true);
-    setTimeout(() => {
-      setLadiesTeamMain(true);
-      setTeamGlitching(false);
-    }, 600);
+    if (teamGlitching) return;
+    if (type === 'LADIES' && !ladiesTeamMain) {
+      setTeamGlitching(true);
+      setTimeout(() => {
+        setLadiesTeamMain(true);
+        setTeamGlitching(false);
+      }, 600);
+    } else if (type === 'KINGS') {
+      setTeamGlitching(true);
+      setTimeout(() => {
+        setKingsTeamAlt(prev => !prev);
+        setTeamGlitching(false);
+      }, 600);
+    }
   };
 
-  const currentTeamPhoto = (type === 'LADIES' && !ladiesTeamMain) ? LADIES_TEAM_INTRO : TEAM_PHOTOS[type];
+  const currentTeamPhoto = type === 'LADIES' 
+    ? (!ladiesTeamMain ? LADIES_TEAM_INTRO : TEAM_PHOTOS[type])
+    : (kingsTeamAlt ? KINGS_TEAM_ALT : TEAM_PHOTOS[type]);
 
   return (
     <motion.div
@@ -194,7 +206,7 @@ const RosterModal = ({ type, members, onClose }) => {
           initial={{ opacity: 0, x: -40, scale: 0.95 }}
           animate={{ opacity: 1, x: 0, scale: 1 }}
           transition={{ delay: 0.2, duration: 1.2, ease: "easeOut" }}
-          className={`w-full xl:w-5/12 relative group flex flex-col justify-center ${type === 'LADIES' && !ladiesTeamMain ? 'cursor-pointer' : ''}`}
+          className={`w-full xl:w-5/12 relative group flex flex-col justify-center cursor-pointer`}
           onClick={handleTeamClick}
         >
           <div className="absolute -inset-1 bg-gradient-to-r from-transparent via-gold/20 to-transparent blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
@@ -304,7 +316,6 @@ const RosterModal = ({ type, members, onClose }) => {
 };
 
 const KINGS_ACHIEVEMENTS = [
-  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_final.png' },
   { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_final.png', fmvp: 'Khoa (Support)' },
   { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_final.png', fmvp: 'Kuga (DSL)' },
   { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_final.png', fmvp: 'Fish (Mid Lane)' },
@@ -641,7 +652,7 @@ export default function App() {
               className="text-center mb-4"
             >
               <h1 className="text-4xl md:text-[5.5rem] font-heading tracking-[0.3em] leading-none text-white drop-shadow-2xl uppercase">
-                SUNDAY THE <span className="gold-gradient italic">KING</span> PLAYS
+                FORGED TO <span className="gold-gradient italic">RISE</span>
               </h1>
             </motion.div>
 
@@ -757,7 +768,7 @@ export default function App() {
                       >
                         <div className="flex items-center gap-3">
                           <h2 className="text-2xl md:text-3xl font-heading tracking-[0.5em] text-white/50 group-hover:text-gold transition-colors uppercase">
-                            Meet Kings
+                            Meet Roster
                           </h2>
                           <img src="/logo_king.jpg" className="w-8 h-8 rounded-full border border-gold/20" />
                         </div>
@@ -789,10 +800,10 @@ export default function App() {
               <div className="flex flex-col items-center">
                 <div className="flex items-center gap-2 mb-2">
                   <img src="/logo_king.jpg" className="w-4 h-4 rounded-full border border-gold/10" />
-                  <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">SGP King</span>
+                  <span className="text-gold/40 text-[9px] uppercase tracking-widest font-bold">Saigon Phantom</span>
                 </div>
                 <div className="flex gap-4 md:gap-12">
-                  <AchievementClean count="11" label="AOG CHAMP" delay={1.8} icon={Crown} />
+                  <AchievementClean count="10" label="AOG CHAMP" delay={1.8} icon={Crown} />
                   <AchievementClean count="01" label="APL23 CHAMP" delay={2.0} icon={Trophy} />
                 </div>
               </div>
