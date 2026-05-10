@@ -24,25 +24,84 @@ const ROSTER_DATA = {
   ]
 };
 
-const Spotlight = () => {
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+const CursorThread = () => {
+  const canvasRef = useRef(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const pointsRef = useRef([]);
+  const NUM_POINTS = 20;
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mouseRef.current = { x: e.clientX, y: e.clientY };
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    // Initialize points
+    pointsRef.current = Array.from({ length: NUM_POINTS }, () => ({ x: window.innerWidth/2, y: window.innerHeight/2 }));
+
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let animationFrame;
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    resize();
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update points with a "natural" delay/spring effect
+      let prev = mouseRef.current;
+      pointsRef.current.forEach((p, i) => {
+        p.x += (prev.x - p.x) * 0.15;
+        p.y += (prev.y - p.y) * 0.15;
+        prev = p;
+      });
+
+      // Draw the "Gold Thread"
+      ctx.beginPath();
+      ctx.moveTo(pointsRef.current[0].x, pointsRef.current[0].y);
+      for (let i = 1; i < pointsRef.current.length - 1; i++) {
+        const xc = (pointsRef.current[i].x + pointsRef.current[i + 1].x) / 2;
+        const yc = (pointsRef.current[i].y + pointsRef.current[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pointsRef.current[i].x, pointsRef.current[i].y, xc, yc);
+      }
+      
+      const gradient = ctx.createLinearGradient(
+        pointsRef.current[0].x, pointsRef.current[0].y, 
+        pointsRef.current[NUM_POINTS-1].x, pointsRef.current[NUM_POINTS-1].y
+      );
+      gradient.addColorStop(0, 'rgba(212, 175, 55, 0.8)');
+      gradient.addColorStop(1, 'rgba(212, 175, 55, 0)');
+      
+      ctx.strokeStyle = gradient;
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Mouse Head Light
+      const head = mouseRef.current;
+      const glow = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 150);
+      glow.addColorStop(0, 'rgba(212, 175, 55, 0.15)');
+      glow.addColorStop(1, 'rgba(212, 175, 55, 0)');
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', resize);
+      cancelAnimationFrame(animationFrame);
+    };
   }, []);
 
-  return (
-    <div
-      className="pointer-events-none fixed inset-0 z-[200] transition-opacity duration-700"
-      style={{
-        background: `radial-gradient(800px at ${mousePos.x}px ${mousePos.y}px, rgba(212, 175, 55, 0.08), transparent 80%)`
-      }}
-    />
-  );
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-[999]" />;
 };
 
 const GodRays = () => (
@@ -205,22 +264,22 @@ const RosterModal = ({ type, members, onClose }) => {
 };
 
 const KINGS_ACHIEVEMENTS = [
-  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_nobg.png', fmvp: 'Bâng (Jungle)' },
-  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_nobg.png', fmvp: 'SGP King' },
-  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_nobg.png', fmvp: 'Khoa (Support)' },
-  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_nobg.png', fmvp: 'Kuga (DSL)' },
-  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_nobg.png', fmvp: 'Fish (Mid Lane)' },
-  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy_nobg.png', fmvp: 'Fish (Mid Lane)' },
-  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy_nobg.png', fmvp: 'Red (ADL)' },
-  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy_nobg.png', fmvp: 'Bâng (Jungle)' },
-  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy_nobg.png', fmvp: 'Yiwei (DSL)' },
-  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy_nobg.png', fmvp: 'Bâng (Jungle)' },
-  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy_nobg.png', fmvp: 'Bâng (Jungle)' },
-  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy_nobg.png', fmvp: 'SGP King' },
+  { type: 'APL', year: '2023', label: 'APL 2023', img: '/apl_cup_final.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Spring 2026', label: 'S26', img: '/aog_trophy_final.png' },
+  { type: 'AOG', year: 'Spring 2025', label: 'S25', img: '/aog_trophy_final.png', fmvp: 'Khoa (Support)' },
+  { type: 'AOG', year: 'Winter 2024', label: 'W24', img: '/aog_trophy_final.png', fmvp: 'Kuga (DSL)' },
+  { type: 'AOG', year: 'Spring 2024', label: 'S24', img: '/aog_trophy_final.png', fmvp: 'Fish (Mid Lane)' },
+  { type: 'AOG', year: 'Winter 2023', label: 'W23', img: '/aog_trophy_final.png', fmvp: 'Fish (Mid Lane)' },
+  { type: 'AOG', year: 'Spring 2023', label: 'S23', img: '/aog_trophy_final.png', fmvp: 'Red (ADL)' },
+  { type: 'AOG', year: 'Winter 2022', label: 'W22', img: '/aog_trophy_final.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Spring 2022', label: 'S22', img: '/aog_trophy_final.png', fmvp: 'Yiwei (DSL)' },
+  { type: 'AOG', year: 'Winter 2021', label: 'W21', img: '/aog_trophy_final.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Winter 2020', label: 'W20', img: '/aog_trophy_final.png', fmvp: 'Bâng (Jungle)' },
+  { type: 'AOG', year: 'Spring 2018', label: 'S18', img: '/aog_trophy_final.png' },
 ];
 
 const LADIES_ACHIEVEMENTS = [
-  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown_nobg.png', fmvp: 'Shizuka (Mid Lane)' },
+  { type: 'QOG', year: 'Spring 2026', label: 'QOG S26', img: '/ladies_crown_final.png', fmvp: 'Shizuka (Mid Lane)' },
 ];
 
 const TrophyItem = ({ item, delay, size = "large" }) => (
@@ -230,15 +289,11 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
     transition={{ delay, duration: 1, type: "spring", bounce: 0.4 }}
     className="group flex flex-col items-center"
   >
-    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-64 md:h-64' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center rounded-full overflow-hidden border border-gold/10 bg-black/40`}>
-      <div className="absolute inset-0 bg-gold/5 blur-[40px] rounded-full group-hover:bg-gold/20 transition-all duration-700" />
+    <div className={`relative ${size === 'large' ? 'w-48 h-48 md:w-64 md:h-64' : 'w-24 h-24 md:w-32 md:h-32'} mb-4 flex items-center justify-center rounded-full overflow-hidden border border-gold/20 bg-black shadow-[0_0_50px_rgba(0,0,0,1)]`}>
+      <div className="absolute inset-0 bg-gold/5 blur-[40px] rounded-full group-hover:bg-gold/15 transition-all duration-700" />
       <img 
         src={item.img} 
-        className="w-[85%] h-[85%] object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.4)] group-hover:scale-110 transition-transform duration-700" 
-        style={{
-          maskImage: 'radial-gradient(circle at center, black 60%, transparent 95%)',
-          WebkitMaskImage: 'radial-gradient(circle at center, black 60%, transparent 95%)'
-        }}
+        className="w-[85%] h-[85%] object-contain filter drop-shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:scale-110 transition-transform duration-700" 
         alt={item.label}
       />
     </div>
@@ -249,16 +304,18 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
       <span className="block text-[8px] md:text-[10px] tracking-[0.2em] text-white/40 uppercase font-bold mb-2">
         {item.year}
       </span>
-      <motion.div 
-        initial={{ opacity: 0, y: 5 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: delay + 0.5 }}
-        className="px-3 py-1 bg-gold/10 rounded-full border border-gold/20 backdrop-blur-sm"
-      >
-        <p className="text-[7px] md:text-[9px] text-gold/80 font-bold uppercase tracking-widest whitespace-nowrap">
-          FMVP: {item.fmvp}
-        </p>
-      </motion.div>
+      {item.fmvp && (
+        <motion.div 
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: delay + 0.5 }}
+          className="px-3 py-1 bg-gold/10 rounded-full border border-gold/20 backdrop-blur-sm"
+        >
+          <p className="text-[7px] md:text-[9px] text-gold/80 font-bold uppercase tracking-widest whitespace-nowrap">
+            FMVP: {item.fmvp}
+          </p>
+        </motion.div>
+      )}
     </div>
   </motion.div>
 );
@@ -299,6 +356,11 @@ const AchievementsModal = ({ onClose }) => (
     </button>
 
     <div className="w-full h-full flex flex-col xl:flex-row items-center p-6 md:p-12 xl:p-20 gap-8 relative z-10 overflow-hidden">
+      {/* DevTee Logo in Modal */}
+      <div className="absolute bottom-10 left-10 opacity-20 hover:opacity-50 transition-opacity">
+        <img src="/devtee_logo.png" className="w-24 object-contain filter grayscale invert" />
+      </div>
+
       {/* SGP Ladies Section */}
       <div className="w-full xl:w-[35%] flex flex-col items-center justify-center h-full border-b xl:border-b-0 xl:border-r border-white/5 pb-10 xl:pb-0 xl:pr-16">
         <motion.div 
@@ -399,7 +461,7 @@ export default function App() {
   return (
     <main className="relative w-full h-screen overflow-hidden bg-[#000000] text-white font-inter">
       <audio ref={audioRef} src="/music.mp3" loop />
-      <Spotlight />
+      <CursorThread />
       <GodRays />
       <DeveloperBadge />
 
@@ -514,9 +576,6 @@ export default function App() {
               </h1>
             </motion.div>
 
-            <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center overflow-hidden">
-              <div className="absolute -inset-10 bg-gold/5 blur-[120px] rounded-full animate-pulse-slow" />
-
               <AnimatePresence mode="wait">
                 {heroStep === 0 ? (
                   <motion.div
@@ -527,11 +586,13 @@ export default function App() {
                     transition={{ duration: 1.5 }}
                     className="relative w-full h-full flex items-center justify-center"
                   >
-                    <img
-                      src="/ckqg.jpg"
-                      className="max-w-[85%] max-h-full object-contain rounded-2xl shadow-[0_0_100px_rgba(0,0,0,0.8)] border border-gold/10"
-                    />
-                    <div className="absolute bottom-12 px-10 py-3 border-b border-gold/30">
+                    <div className="relative max-w-[85%] max-h-full aspect-video rounded-[3rem] overflow-hidden border border-gold/15 shadow-[0_0_100px_rgba(0,0,0,0.8)]">
+                      <img
+                        src="https://scontent.fsgn5-2.fna.fbcdn.net/v/t39.30808-6/690865252_1523561699439806_8066791754776144081_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeFULRv7ehF2JdrpArUxXYgYXaiYQEDVDkZdqJhAQNUORnr37-um838Z6uqRSRhnG8mATTbeLjLzjlB_8D43qmnF&_nc_ohc=CIRUhdliGK4Q7kNvwG5zdOF&_nc_oc=Adr25wpYHS0cfFZu_gbw9TPgH-GIXBA1rTGbmXIKagQDakIIAG9LJMnbh6kFkb9UDMQ&_nc_zt=23&_nc_ht=scontent.fsgn5-2.fna&_nc_gid=OHWFサロンXZOmrkUhzUhNhQw&_nc_ss=7b2a8&oh=00_Af4Tvdq9Fv1_02hS_3txzoibCE1S0q8bkUVD001PQedyKw&oe=6A062AD6"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute bottom-12 px-10 py-3 border-b border-gold/30 backdrop-blur-md">
                       <span className="text-gold font-heading text-4xl tracking-[0.4em] uppercase">Supremacy</span>
                     </div>
                   </motion.div>
@@ -540,6 +601,7 @@ export default function App() {
                     key="team"
                     initial={{ opacity: 0, filter: "blur(40px)" }}
                     animate={{ opacity: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, scale: 1.1 }}
                     transition={{ duration: 1.8 }}
                     className="relative w-full h-full flex flex-col items-center justify-center"
                   >
