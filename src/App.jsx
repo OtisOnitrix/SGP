@@ -656,7 +656,7 @@ export default function App() {
               </h1>
             </motion.div>
 
-            <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center overflow-hidden">
+            <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center">
               <div className="absolute -inset-10 bg-gold/5 blur-[120px] rounded-full animate-pulse-slow" />
 
               <AnimatePresence mode="wait">
@@ -719,7 +719,7 @@ export default function App() {
                     transition={{ duration: 1.8 }}
                     className="relative w-full h-full flex flex-col items-center justify-center"
                   >
-                    <div className="relative w-full h-[85%] flex items-center justify-center">
+                    <div className="relative w-full h-[55%] flex items-center justify-center">
                       <div className="relative max-w-[95%] max-h-full aspect-video md:aspect-[21/9] rounded-[3rem] overflow-hidden border border-gold/15 shadow-[0_0_150px_rgba(0,0,0,0.9)] bg-black/20">
                         <motion.img
                           animate={{ scale: [1, 1.02, 1] }}
@@ -786,7 +786,7 @@ export default function App() {
                         opacity: { delay: 1.5, duration: 1 },
                         y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
                       }}
-                      className="mt-16 flex items-center justify-center gap-20 md:gap-32 w-full"
+                      className="mt-8 flex items-center justify-center gap-20 md:gap-32 w-full"
                     >
                       <div className="flex flex-col items-center group">
                         <div className="flex items-center gap-3">
