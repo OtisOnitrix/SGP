@@ -254,13 +254,13 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
         alt={item.label}
       />
     </div>
-    <div className="text-center">
+    <div className="text-center mt-1">
       <span className={`block text-gold font-heading ${
-        size === 'large' ? 'text-2xl md:text-3xl' : 'text-base md:text-lg'
-      } tracking-widest leading-none mb-1 drop-shadow-gold`}>
+        size === 'large' ? 'text-3xl md:text-4xl' : 'text-xl md:text-2xl'
+      } tracking-widest leading-none mb-1.5 drop-shadow-gold`}>
         {item.label}
       </span>
-      <span className="block text-[7px] md:text-[9px] tracking-[0.15em] text-white/35 uppercase font-bold mb-1.5">
+      <span className="block text-[10px] md:text-[12px] tracking-[0.15em] text-white/40 uppercase font-bold mb-2">
         {item.year}
       </span>
       {item.fmvp && (
@@ -268,9 +268,9 @@ const TrophyItem = ({ item, delay, size = "large" }) => (
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: delay + 0.4 }}
-          className="px-2 py-0.5 bg-gold/10 rounded-full border border-gold/20"
+          className="px-3 py-1 bg-gold/10 rounded-full border border-gold/20"
         >
-          <p className="text-[6px] md:text-[8px] text-gold/75 font-bold uppercase tracking-widest whitespace-nowrap">
+          <p className="text-[9px] md:text-[11px] text-gold/75 font-bold uppercase tracking-widest whitespace-nowrap">
             FMVP: {item.fmvp}
           </p>
         </motion.div>
